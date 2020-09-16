@@ -6,6 +6,7 @@ use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
+use think\exception\RouteNotFoundException;
 use think\exception\ValidateException;
 use think\Response;
 use Throwable;
@@ -51,7 +52,7 @@ class ExceptionHandle extends Handle
     public function render($request, Throwable $e): Response
     {
         // 添加自定义异常处理机制
-
+        
         // 其他错误交给系统处理
         return parent::render($request, $e);
     }

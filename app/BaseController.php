@@ -91,4 +91,7 @@ abstract class BaseController
         return $v->failException(true)->check($data);
     }
 
+    public function __error() {
+        return 1;
+    }
 }
