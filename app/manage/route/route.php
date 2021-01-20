@@ -9,3 +9,9 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+
+Route::miss(function() {
+    return view('error/404');
+});
+
+Route::get('/', 'index/index');

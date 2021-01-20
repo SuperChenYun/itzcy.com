@@ -1,5 +1,10 @@
 /.idea
 /.vscode
 /vendor
+/runtime
 *.log
 .env
+*.cache
+composer.lock
+public/.htaccess
+public/nginx.htaccess

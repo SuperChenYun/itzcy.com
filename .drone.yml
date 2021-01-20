@@ -1,0 +1,96 @@
+# drone 本地构建
+kind: pipeline
+type: docker
+name: Itzcy.Com-DroneTest
+
+# drone构建步骤
+steps:
+  - name: composer
+    pull: if-not-exists
+    image: composer:latest
+    commands:
+      - composer -V
+      - composer install --no-interaction
+
+  # 单元测试
+  - name: phpunit php7.2.32-cli
+    pull: if-not-exists
+    image: php:7.2.32-cli
+    commands:
+      - php -v
+      - cp .example.env .env
+      - ./vendor/bin/phpunit
+
+  - name: phpunit php7.3.2
+    pull: if-not-exists
+    image: php:7.3.20
+    commands:
+      - php -v
+      - cp .example.env .env
+      - ./vendor/bin/phpunit
+
+#  # 转移到主机目录
+#  - name: copy file
+#    pull: if-not-exists
+#    image: php:7.3.20
+#    volumes:
+#      # 挂载宿主机的目录
+#      - name: itzcy_com_build_dir
+#        path: /home
+#    commands:
+#      - ls -la
+#      - cp -rfa ./ /home/
+#
+#  - name: ssh commands
+#    pull: if-not-exists
+#    image: appleboy/drone-ssh:latest
+#    rm: true
+#    settings:
+#      host: 10.10.1.56
+#      username: root
+#      password:
+#        # 从drone仓库配置中秘密空间读取密码
+#        from_secret: ssh_password
+#      port: 22
+#      script:
+#        - echo StartBuildDockerImage
+#        - echo =======暂停容器=======
+#        - docker stop `docker ps -a | grep itzcy.com | awk '{print $1}' `
+#        - echo =======删除旧容器和镜像=======
+#        - docker rm -f `docker ps -a | grep itzcy.com | awk '{print $1}' `
+#        - docker rmi `docker images | grep itzcy.com | awk '{print $3}' `
+#        - echo =======开始构建新镜像=======
+#        - cd /data/drone/proj/itzcy_com_build_dir
+#        - docker build -t itzcy.com:v1 .
+#        - echo =======开始部署应用=======
+#        - docker run -d -p 8000:8000 --name itzcy.com itzcy.com:v1
+#        - echo =======清理构建文件=======
+#        - rm -rf *
+#        - echo =======部署成功=======
+
+  # 钉钉通知
+  - name: dingTalk notification
+    pull: if-not-exists
+    image: guoxudongdocker/drone-dingtalk:latest
+    settings:
+      token:
+        from_secret: dingtalk_token
+      type: markdown
+      message_color: true
+      message_pic: true
+      sha_link: true
+    when:
+      status: [failure, success]
+
+## 挂载的主机卷，可以映射到docker容器中
+#volumes:
+#  # 构建完成目录
+#  - name: itzcy_com_build_dir
+#    host:
+#      path: /data/drone/proj/itzcy_com_build_dir
+
+# drone执行触发器
+trigger:
+  branch:
+    - master
+    - develop

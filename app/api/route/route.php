@@ -9,3 +9,11 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+Route::miss(function() {
+    return \app\common\lib\IO::fail('Route Not Found', \app\common\lib\ErrCode::ROUTE_NOT_FOUNT);
+});
+
+
+Route::get('/', 'api/index/index');
+
+
