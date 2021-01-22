@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common;
+namespace app;
 
 
 use think\Model;

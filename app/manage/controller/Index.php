@@ -13,7 +13,7 @@ class Index extends BaseController
         echo '<br />';
         # code...
         echo __CLASS__;
-        echo '\\';
+        echo "\n<br />";
         echo __FUNCTION__;
     }
 }

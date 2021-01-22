@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common;
+namespace app;
 
 
 /**
@@ -9,7 +9,7 @@ namespace app\common;
  * Class BaseService
  * @package app\common
  */
-class BaseService
+abstract class BaseService
 {
     
 }

@@ -8,18 +8,17 @@ use think\annotation\Route;
 class Index extends BaseController
 {
     /**
-     * @Route("xxxxxxxx")
+     *
      */
     public function index() 
     {
         echo  'WEB';
         echo "<br />";
         echo get_class($this->request);
-        echo "\n";
-        echo '<br />';
+        echo "\n<br />";
         # code...
         echo __CLASS__;
-        echo '\\';
+        echo "\n<br />";
         echo __FUNCTION__;
     }
 }
