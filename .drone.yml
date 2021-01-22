@@ -11,8 +11,17 @@ steps:
     commands:
       - composer -V
       - composer install --no-interaction
-
+      -
   # 单元测试
+  - name: phpunit php7.3.2
+    pull: if-not-exists
+    image: php:7.3.20
+    commands:
+      - php -v
+      - cp .example.drone.env .env
+      - php think migrate:run
+      - ./vendor/bin/phpunit
+
   - name: phpunit php7.4.14
     pull: if-not-exists
     image: php:7.4.14
@@ -22,14 +31,7 @@ steps:
       - php think migrate:run
       - ./vendor/bin/phpunit
 
-  - name: phpunit php7.3.2
-    pull: if-not-exists
-    image: php:7.3.20
-    commands:
-      - php -v
-      - cp .example.drone.env .env
-      - php think migrate:run
-      - ./vendor/bin/phpunit
+
 
 #  # 转移到主机目录
 #  - name: copy file
