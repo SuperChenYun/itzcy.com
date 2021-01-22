@@ -162,6 +162,8 @@ class TagService extends BaseService
         $insertData = [];
         foreach ($tagModelList as $tagModel) {
             $insertData[] = [
+                'create_time'   => time(),
+                'update_time'   => time(),
                 'tag_id'        => is_object($tagModel) ? $tagModel -> id : $tagModel['id'],
                 'relation_type' => $type,
                 'target_id'     => $id,
@@ -225,6 +227,11 @@ class TagService extends BaseService
     {
         // 获取目标的id
         $id = $targetModel -> getData($targetModel -> getPk());
+        
+        // 如果没数据就返回 True
+        if(!TagRelationModel::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
+            return true;
+        }
         
         return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> delete();
         
