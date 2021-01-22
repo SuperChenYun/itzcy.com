@@ -8,8 +8,8 @@ steps:
   - name: mysql
     pull: if-not-exists
     image: mysql:8.0.23
-    commands:
-      - --default-authentication-plugin=mysql_native_password
+#    commands:
+#      - --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
