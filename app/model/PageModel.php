@@ -10,5 +10,5 @@ use app\BaseModel;
  */
 class PageModel extends BaseModel
 {
-    //
+    protected $name = 'page';
 }

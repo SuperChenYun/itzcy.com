@@ -11,5 +11,26 @@ namespace app;
  */
 abstract class BaseService
 {
+    protected $request;
     
+    protected $pageRows = 15;
+    
+    public function __construct (Request $request)
+    {
+        $this -> request  = $request;
+        $this -> pageRows = $request -> param('limit', $this -> pageRows);
+    }
+    
+    /**
+     * 获取分页偏移量
+     *
+     * @param int $page
+     *
+     * @return int
+     */
+    public function offset (int $page)
+    {
+        return ($page - 1) * $this -> pageRows;
+        
+    }
 }

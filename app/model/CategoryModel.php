@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\model;
 
@@ -11,5 +11,5 @@ use app\BaseModel;
  */
 class CategoryModel extends BaseModel
 {
-    //
+    protected $name = 'category';
 }

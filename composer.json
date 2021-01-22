@@ -49,7 +49,10 @@
         "post-autoload-dump": [
             "@php think service:discover",
             "@php think vendor:publish"
-        ]
+        ],
+        "start": "php think run",
+        "coverage": "vendor\\bin\\phpunit --coverage-html=coverage",
+        "test": "vendor\\bin\\phpunit"
     },
     "repositories": {
         "packagist": {

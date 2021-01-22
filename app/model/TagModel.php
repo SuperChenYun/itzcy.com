@@ -10,5 +10,5 @@ use app\BaseModel;
  */
 class TagModel extends BaseModel
 {
-    //
+    protected $name = 'tag';
 }

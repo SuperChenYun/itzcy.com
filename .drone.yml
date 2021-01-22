@@ -5,6 +5,16 @@ name: Itzcy.Com-DroneTest
 
 # drone构建步骤
 steps:
+  - name: mysql
+    pull: if-not-exists
+    image: mysql:8.0.23
+    commands:
+      - --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+
   - name: composer
     pull: if-not-exists
     image: composer:latest
@@ -19,6 +29,7 @@ steps:
     commands:
       - php -v
       - cp .example.env .env
+      - php think migrate:run
       - ./vendor/bin/phpunit
 
   - name: phpunit php7.3.2
@@ -27,6 +38,7 @@ steps:
     commands:
       - php -v
       - cp .example.env .env
+      - php think migrate:run
       - ./vendor/bin/phpunit
 
 #  # 转移到主机目录
