@@ -13,9 +13,9 @@ steps:
       - composer install --no-interaction
 
   # 单元测试
-  - name: phpunit php7.2.32-cli
+  - name: phpunit php7.4.14
     pull: if-not-exists
-    image: php:7.2.32-cli
+    image: php:7.4.14
     commands:
       - php -v
       - cp .example.drone.env .env
