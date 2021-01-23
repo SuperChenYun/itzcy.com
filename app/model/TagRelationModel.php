@@ -11,6 +11,7 @@ use think\model\relation\HasOne;
  */
 class TagRelationModel extends BaseModel
 {
+    
     protected $name = 'tag_relation';
     
     /**
@@ -19,6 +20,6 @@ class TagRelationModel extends BaseModel
      */
     public function tag (): HasOne
     {
-        return $this -> hasOne(TagModel::class, 'id', 'tag_id');
+        return $this -> hasOne(TagModel::class, 'id', 'tag_id') -> bind(['tag_name','tag_sign']);
     }
 }

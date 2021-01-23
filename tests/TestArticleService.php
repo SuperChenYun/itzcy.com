@@ -1,21 +1,25 @@
 <?php
 
 
-use app\service\CategoryService;
-use app\service\LinkService;
+use app\service\ArticleService;
 
-class TestPageService extends TestCase
+class TestArticleService extends TestCase
 {
-    
     /**
-     * @var \app\service\PageService
+     * @var ArticleService
      */
-    private $pageService;
+    private $articleService;
     
     public function __construct ($name = null, array $data = [], $dataName = '')
     {
         parent ::__construct($name, $data, $dataName);
-        $this -> pageService = new \app\service\PageService(new \app\Request());
+        $request = new \app\Request();
+        $this -> articleService = new ArticleService($request, new \app\service\TagService($request));
+    }
+    
+    private function randTagList ()
+    {
+        return \app\model\TagModel ::where([]) -> limit(rand(1, 5)) -> select();
     }
     
     /**
@@ -24,11 +28,14 @@ class TestPageService extends TestCase
     public function add ()
     {
         $categoryModel = \app\model\CategoryModel ::where(['delete_time' => 0]) -> find();
+        
         $this -> assertIsObject(
-            $page = $this -> pageService -> add(
-                'pageTitle',
-                'PageContent',
+            $article = $this -> articleService -> add(
+                'articleTitle',
+                '## PageContent',
+                '<h2>PageContent</h2>',
                 $categoryModel,
+                $this -> randTagList(),
                 [
                     'featured_image' => 'featured_image',
                     'keywords'       => 'keywords',
@@ -38,7 +45,7 @@ class TestPageService extends TestCase
                 ]
             )
         );
-        $this -> assertTrue($page instanceof \app\model\PageModel);
+        $this -> assertTrue($article instanceof \app\model\ArticleModel);
     }
     
     /**
@@ -48,7 +55,7 @@ class TestPageService extends TestCase
     {
         
         try {
-            $pageModel     = \app\model\pageModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
+            $articleModel    = \app\model\ArticleModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
             $categoryModel = \app\model\CategoryModel ::where([]) -> order('id', 'desc') -> find();
             
         } catch (\think\db\exception\DbException $e) {
@@ -57,21 +64,21 @@ class TestPageService extends TestCase
         
         
         $this -> assertIsObject(
-            $page = $this -> pageService -> edit(
-                $pageModel,
-                'pageTitlec',
-                'PageContent',
+            $article = $this -> articleService -> edit(
+                $articleModel,
+                'articleTitlec',
+                '## CPageContent',
+                '<h2>CPageContent</h2>',
                 $categoryModel,
+                $this -> randTagList(),
                 [
                     'featured_image' => 'featured_image',
                     'keywords'       => 'keywords',
                     'describes'      => 'describes',
-                    'views'          => mt_rand(1, 9999),
-                    'release_time'   => time(),
                 ]
             )
         );
-        $this -> assertTrue($page instanceof \app\model\pageModel);
+        $this -> assertTrue($article instanceof \app\model\ArticleModel);
     }
     
     /**
@@ -82,15 +89,15 @@ class TestPageService extends TestCase
     public function read ()
     {
         try {
-            $page = \app\model\PageModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
+            $article = \app\model\ArticleModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
         } catch (\think\db\exception\DbException $e) {
             return false;
         }
         $this -> assertIsObject(
-            $page = $this -> pageService -> read($page -> id)
+            $article = $this -> articleService -> read($article -> id)
         );
         
-        $this -> assertTrue($page instanceof \app\model\PageModel);
+        $this -> assertTrue($article instanceof \app\model\ArticleModel);
         
     }
     
@@ -104,19 +111,19 @@ class TestPageService extends TestCase
     public function remove ()
     {
         try {
-            $pageModel = \app\model\pageModel ::where([]) -> order('id', 'desc') -> find();
+            $article = \app\model\ArticleModel ::where([]) -> order('id', 'desc') -> find();
         } catch (\think\db\exception\DbException $e) {
             return false;
         }
         
-        $this -> assertTrue($this -> pageService -> remove($pageModel -> id));
+        $this -> assertTrue($this -> articleService -> remove($article -> id));
     }
     
     public function lists()
     {
-        $count = \app\model\PageModel ::where(['delete_time' => 0]) -> count();
+        $count = \app\model\ArticleModel::where(['delete_time' => 0]) -> count();
     
-        $list = $this ->pageService->lists();
+        $list = $this ->articleService->lists();
     
         $this -> assertTrue($count == count($list));
     }
@@ -124,12 +131,12 @@ class TestPageService extends TestCase
      * @test
      * @depends read
      */
-    public function views()
+    public function views ()
     {
-        $pageModel = \app\model\pageModel ::where([]) -> order('id', 'desc') -> find();
-        $pageModel = $this->pageService->views($pageModel);
-        $this->assertIsObject($pageModel);
-        $this->assertTrue($pageModel instanceof \app\model\PageModel);
+        $articleModel = \app\model\ArticleModel ::where([]) -> order('id', 'desc') -> find();
+        $articleModel = $this -> articleService -> views($articleModel);
+        $this -> assertIsObject($articleModel);
+        $this -> assertTrue($articleModel instanceof \app\model\ArticleModel);
         
     }
 }
