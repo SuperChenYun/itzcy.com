@@ -101,7 +101,7 @@ class LinkService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\LinkModel()) -> where($where) -> find($id);
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -133,7 +133,7 @@ class LinkService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -166,7 +166,7 @@ class LinkService extends BaseService
             return $linkModel -> select();
             
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
         

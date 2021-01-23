@@ -98,7 +98,7 @@ class PageService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\PageModel()) -> where($where) -> find($id);
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -130,7 +130,7 @@ class PageService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -163,7 +163,7 @@ class PageService extends BaseService
             return $pageModel -> select();
             
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
         

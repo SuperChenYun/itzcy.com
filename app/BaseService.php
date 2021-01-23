@@ -4,6 +4,9 @@
 namespace app;
 
 
+use Exception;
+use think\facade\Log;
+
 /**
  * 业务服务的基类
  * Class BaseService
@@ -32,5 +35,13 @@ abstract class BaseService
     {
         return ($page - 1) * $this -> pageRows;
         
+    }
+    
+    /**
+     * @param Exception $e
+     */
+    public function handleException ($e)
+    {
+        Log ::error($e -> getMessage() . "\n" . $e -> getTraceAsString());
     }
 }

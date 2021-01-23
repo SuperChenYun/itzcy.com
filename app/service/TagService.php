@@ -88,13 +88,13 @@ class TagService extends BaseService
                 'delete_time' => 0
             ];
             
-            $tagModel = (new \app\model\TagModel) -> where($where)-> find($id);
+            $tagModel = (new \app\model\TagModel) -> where($where) -> find($id);
             if ($tagModel) {
                 return $tagModel;
             }
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
     }
@@ -126,7 +126,7 @@ class TagService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
     }
@@ -145,7 +145,7 @@ class TagService extends BaseService
         try {
             
             $where = array_merge($where, ['delete_time' => 0]);
-        
+            
             $tagModel = TagModel ::where($where);
             
             if ($page !== false) {
@@ -159,7 +159,7 @@ class TagService extends BaseService
             return $tagModel -> select();
             
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
     }
@@ -167,13 +167,13 @@ class TagService extends BaseService
     /**
      * 给Target添加多个标签
      *
-     * @param BaseModel  $targetModel
-     * @param Int        $type
-     * @param TagModel[] $tagModelList
+     * @param BaseModel        $targetModel
+     * @param Int              $type
+     * @param Collection|array $tagModelList
      *
      * @return integer|boolean|Collection|array
      */
-    public function relationAdd (BaseModel $targetModel, int $type, array $tagModelList)
+    public function relationAdd (BaseModel $targetModel, int $type, $tagModelList)
     {
         // 获取目标的id
         $id = $targetModel -> getData($targetModel -> getPk());
@@ -194,13 +194,13 @@ class TagService extends BaseService
     /**
      * 给Target修改多个标签
      *
-     * @param BaseModel  $targetModel
-     * @param Int        $type
-     * @param TagModel[] $tagModelList
+     * @param BaseModel        $targetModel
+     * @param Int              $type
+     * @param Collection|array $tagModelList
      *
      * @return integer|boolean|Collection|array
      */
-    public function relationEdit (BaseModel $targetModel, int $type, array $tagModelList)
+    public function relationEdit (BaseModel $targetModel, int $type, $tagModelList)
     {
         // 删除旧数据
         $del = $this -> relationRemove($targetModel, $type);
@@ -229,7 +229,7 @@ class TagService extends BaseService
         try {
             return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> with(['tag']) -> select();
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
     }
@@ -244,15 +244,20 @@ class TagService extends BaseService
      */
     public function relationRemove (BaseModel $targetModel, int $type): bool
     {
-        // 获取目标的id
-        $id = $targetModel -> getData($targetModel -> getPk());
-        
-        // 如果没数据就返回 True
-        if (!TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
-            return true;
+        try {
+            // 获取目标的id
+            $id = $targetModel -> getData($targetModel -> getPk());
+    
+            // 如果没数据就返回 True
+            if (!TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
+                return true;
+            }
+    
+            return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> delete();
+        } catch (DbException $e) {
+            $this->handleException($e);
+            return false;
         }
-        
-        return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> delete();
         
     }
     

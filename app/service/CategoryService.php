@@ -82,7 +82,7 @@ class CategoryService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\CategoryModel) -> where($where) -> find($id);
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
     }
@@ -111,7 +111,7 @@ class CategoryService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
     }
@@ -143,7 +143,7 @@ class CategoryService extends BaseService
             return $categoryModel -> select();
             
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
     }

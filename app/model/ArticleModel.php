@@ -29,6 +29,6 @@ class ArticleModel extends BaseModel
      */
     public function tagList()
     {
-        return $this->hasMany(TagRelationModel::class, 'target_id', 'id') -> where(['type' => self::TARGET_TYPE]);
+        return $this->hasMany(TagRelationModel::class, 'target_id', 'id') -> where(['relation_type' => self::TARGET_TYPE]);
     }
 }

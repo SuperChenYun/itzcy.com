@@ -3,7 +3,7 @@
 
 use app\service\ArticleService;
 
-class TestArticleService extends TestCase
+class TestArticleService extends TestAAACase
 {
     /**
      * @var ArticleService
@@ -28,23 +28,26 @@ class TestArticleService extends TestCase
     public function add ()
     {
         $categoryModel = \app\model\CategoryModel ::where(['delete_time' => 0]) -> find();
+    
+        $article = $this -> articleService -> add(
+            'articleTitle',
+            '## PageContent',
+            '<h2>PageContent</h2>',
+            $categoryModel,
+            $this -> randTagList(),
+            [
+                'featured_image' => 'featured_image',
+                'keywords'       => 'keywords',
+                'describes'      => 'describes',
+                'views'          => mt_rand(1, 9999),
+                'release_time'   => time(),
+            ]
+        );
         
         $this -> assertIsObject(
-            $article = $this -> articleService -> add(
-                'articleTitle',
-                '## PageContent',
-                '<h2>PageContent</h2>',
-                $categoryModel,
-                $this -> randTagList(),
-                [
-                    'featured_image' => 'featured_image',
-                    'keywords'       => 'keywords',
-                    'describes'      => 'describes',
-                    'views'          => mt_rand(1, 9999),
-                    'release_time'   => time(),
-                ]
-            )
+           $article
         );
+        
         $this -> assertTrue($article instanceof \app\model\ArticleModel);
     }
     
@@ -62,21 +65,22 @@ class TestArticleService extends TestCase
             return false;
         }
         
+        $article =  $this -> articleService -> edit(
+            $articleModel,
+            'articleTitlec',
+            '## CPageContent'. time(),
+            '<h2>CPageContent</h2>',
+            $categoryModel,
+            $this -> randTagList(),
+            [
+                'featured_image' => 'featured_image',
+                'keywords'       => 'keywords',
+                'describes'      => 'describes',
+            ]
+        );
         
         $this -> assertIsObject(
-            $article = $this -> articleService -> edit(
-                $articleModel,
-                'articleTitlec',
-                '## CPageContent',
-                '<h2>CPageContent</h2>',
-                $categoryModel,
-                $this -> randTagList(),
-                [
-                    'featured_image' => 'featured_image',
-                    'keywords'       => 'keywords',
-                    'describes'      => 'describes',
-                ]
-            )
+            $article
         );
         $this -> assertTrue($article instanceof \app\model\ArticleModel);
     }

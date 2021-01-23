@@ -56,7 +56,7 @@ class SettingService extends BaseService
             }
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -83,7 +83,7 @@ class SettingService extends BaseService
             $settingModel -> value = call_user_func($filter, $settingModel -> value);;
             return $settingModel;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return false;
         }
         
@@ -115,7 +115,7 @@ class SettingService extends BaseService
             }
             return $settings;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this->handleException($e);
             return [];
         }
     }

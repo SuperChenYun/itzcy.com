@@ -3,7 +3,7 @@
 
 use app\service\CategoryService;
 
-class TestCategoryService extends TestCase
+class TestCategoryService extends TestAAACase
 {
     /**
      * @var CategoryService
@@ -64,7 +64,7 @@ class TestCategoryService extends TestCase
     public function readCategory ()
     {
         try {
-            $categoryModel = \app\model\CategoryModel ::where([]) -> order('id', 'desc') -> find();
+            $categoryModel = \app\model\CategoryModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
         } catch (\think\db\exception\DbException $e) {
             return false;
         }

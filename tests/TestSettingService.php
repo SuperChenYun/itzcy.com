@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use app\service\SettingService;
 
-class TestSettingService extends TestCase
+class TestSettingService extends TestAAACase
 {
     /**
      * @var SettingService

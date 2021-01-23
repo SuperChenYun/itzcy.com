@@ -37,29 +37,36 @@ class ArticleService extends BaseService
     /**
      * 添加
      *
-     * @param string        $title
-     * @param string        $contentMarkdown
-     * @param string        $content
-     * @param CategoryModel $categoryModel
-     * @param array         $tagModelList [TagModel]
-     * @param array         $extra
-     *                                    String $extra [featured_image] 特色图像
-     *                                    String $extra [keywords] 关键字用于SEO
-     *                                    String $extra [describes] 简介用于SEO
-     *                                    String $extra [views] 浏览量
-     *                                    String $extra [is_original] 是否原创文章
-     *                                    String $extra [source_url] 原文链接
-     *                                    String $extra [source_name] 文章来源名称
+     * @param string           $title
+     * @param string           $contentMarkdown
+     * @param string           $content
+     * @param CategoryModel    $categoryModel
+     * @param array|Collection $tagModelList [TagModel]
+     * @param array            $extra
+     *                                       String $extra [featured_image] 特色图像
+     *                                       String $extra [keywords] 关键字用于SEO
+     *                                       String $extra [describes] 简介用于SEO
+     *                                       String $extra [views] 浏览量
+     *                                       String $extra [is_original] 是否原创文章
+     *                                       String $extra [source_url] 原文链接
+     *                                       String $extra [source_name] 文章来源名称
      *
      * @return ArticleModel|false
      * @transaction
      */
-    public function add (string $title, string $contentMarkdown, string $content, CategoryModel $categoryModel, array $tagModelList = [], array $extra = [])
+    public function add (string $title, string $contentMarkdown, string $content, CategoryModel $categoryModel, $tagModelList = [], array $extra = [])
     {
         Db ::startTrans();
         $articleModel = new ArticleModel();
         
-        $articleModel -> data($extra);
+        // 这里这样写 而不用 -> data($extra) 的原因是,如果调用 data 方法后 接下来的操作拿不到 模型对象的 主键ID
+        if (isset($extra['featured_image'])) $articleModel -> featured_image = $extra['featured_image'];
+        if (isset($extra['keywords'])) $articleModel -> keywords = $extra['keywords'];
+        if (isset($extra['describes'])) $articleModel -> describes = $extra['describes'];
+        if (isset($extra['views'])) $articleModel -> views = $extra['views'];
+        if (isset($extra['is_original'])) $articleModel -> is_original = $extra['is_original'];
+        if (isset($extra['source_url'])) $articleModel -> source_url = $extra['source_url'];
+        if (isset($extra['source_name'])) $articleModel -> source_name = $extra['source_name'];
         
         $articleModel -> title            = $title;
         $articleModel -> content_markdown = $contentMarkdown;
@@ -72,12 +79,13 @@ class ArticleService extends BaseService
             Db ::rollback();
             return false;
         }
+        
         // 保存 Tag Relation
         $relationSaveStatus = $this -> tagService -> relationAdd($articleModel, ArticleModel::TARGET_TYPE, $tagModelList);
         
         if ($relationSaveStatus) {
             Db ::commit();
-            return true;
+            return $articleModel;
         }
         Db ::rollback();
         return false;
@@ -86,28 +94,36 @@ class ArticleService extends BaseService
     /**
      * 修改
      *
-     * @param ArticleModel  $articleModel
-     * @param string        $title
-     * @param string        $contentMarkdown
-     * @param string        $content
-     * @param CategoryModel $categoryModel
-     * @param array         $tagModelList [TagModel]
-     * @param array         $extra
-     *                                    String $extra [featured_image] 特色图像
-     *                                    String $extra [keywords] 关键字用于SEO
-     *                                    String $extra [describes] 简介用于SEO
-     *                                    String $extra [views] 浏览量
-     *                                    String $extra [is_original] 是否原创文章
-     *                                    String $extra [source_url] 原文链接
-     *                                    String $extra [source_name] 文章来源名称
+     * @param ArticleModel     $articleModel
+     * @param string           $title
+     * @param string           $contentMarkdown
+     * @param string           $content
+     * @param CategoryModel    $categoryModel
+     * @param array|Collection $tagModelList [TagModel]
+     * @param array            $extra
+     *                                       String $extra [featured_image] 特色图像
+     *                                       String $extra [keywords] 关键字用于SEO
+     *                                       String $extra [describes] 简介用于SEO
+     *                                       String $extra [views] 浏览量
+     *                                       String $extra [is_original] 是否原创文章
+     *                                       String $extra [source_url] 原文链接
+     *                                       String $extra [source_name] 文章来源名称
      *
      * @transaction
      * @return ArticleModel|false
      */
-    public function edit (ArticleModel $articleModel, string $title, string $contentMarkdown, string $content, CategoryModel $categoryModel, array $tagModelList = [], array $extra = [])
+    public function edit (ArticleModel $articleModel, string $title, string $contentMarkdown, string $content, CategoryModel $categoryModel, $tagModelList = [], array $extra = [])
     {
         Db ::startTrans();
-        $articleModel -> data($extra);
+        
+        // 这里这样写 而不用 -> data($extra) 的原因是,如果调用 data 方法后 接下来的操作拿不到 模型对象的 主键ID
+        if (isset($extra['featured_image'])) $articleModel -> featured_image = $extra['featured_image'];
+        if (isset($extra['keywords'])) $articleModel -> keywords = $extra['keywords'];
+        if (isset($extra['describes'])) $articleModel -> describes = $extra['describes'];
+        if (isset($extra['views'])) $articleModel -> views = $extra['views'];
+        if (isset($extra['is_original'])) $articleModel -> is_original = $extra['is_original'];
+        if (isset($extra['source_url'])) $articleModel -> source_url = $extra['source_url'];
+        if (isset($extra['source_name'])) $articleModel -> source_name = $extra['source_name'];
         
         $articleModel -> title            = $title;
         $articleModel -> content_markdown = $contentMarkdown;
@@ -115,17 +131,18 @@ class ArticleService extends BaseService
         
         $articleModel -> category_id   = $categoryModel -> id;
         $articleModel -> category_name = $categoryModel -> category_name;
-        
+
         if (!$articleModel -> save()) {
             Db ::rollback();
             return false;
         }
+    
         // 修改 Tag Relation
         $relationSaveStatus = $this -> tagService -> relationEdit($articleModel, ArticleModel::TARGET_TYPE, $tagModelList);
-        
+
         if ($relationSaveStatus) {
             Db ::commit();
-            return true;
+            return $articleModel;
         }
         Db ::rollback();
         return false;
@@ -145,7 +162,7 @@ class ArticleService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\ArticleModel()) -> with(['category', 'tagList.tag']) -> where($where) -> find($id);
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this -> handleException($e);
             return false;
         }
         
@@ -177,7 +194,7 @@ class ArticleService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this -> handleException($e);
             return false;
         }
         
@@ -210,7 +227,7 @@ class ArticleService extends BaseService
             return $articleModel -> select();
             
         } catch (DbException $e) {
-            Log ::error($e -> getTraceAsString());
+            $this -> handleException($e);
             return [];
         }
     }

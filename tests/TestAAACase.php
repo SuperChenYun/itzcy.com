@@ -1,7 +1,7 @@
 <?php
 
 
-class TestCase extends \PHPUnit\Framework\TestCase
+class TestAAACase extends \PHPUnit\Framework\TestCase
 {
     public function __construct ($name = null, array $data = [], $dataName = '')
     {

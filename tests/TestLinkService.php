@@ -1,10 +1,9 @@
 <?php
 
 
-use app\service\CategoryService;
 use app\service\LinkService;
 
-class TestLinkService extends TestCase
+class TestLinkService extends TestAAACase
 {
     /**
      * @var LinkService
@@ -20,7 +19,7 @@ class TestLinkService extends TestCase
     /**
      * @test
      */
-    public function addCategory ()
+    public function add ()
     {
         $this -> assertIsObject(
             $link = $this -> linkService -> add(
@@ -45,7 +44,7 @@ class TestLinkService extends TestCase
     /**
      * @test
      */
-    public function editCategory ()
+    public function edit ()
     {
         
         try {
@@ -78,7 +77,7 @@ class TestLinkService extends TestCase
     /**
      * @test
      */
-    public function readCategory ()
+    public function read ()
     {
         try {
             $link = \app\model\LinkModel ::where([]) -> order('id', 'desc') -> find();
@@ -86,21 +85,21 @@ class TestLinkService extends TestCase
             return false;
         }
         $this -> assertIsObject(
-            $category = $this -> linkService -> read($link -> id)
+            $link = $this -> linkService -> read($link -> id)
         );
         
-        $this -> assertTrue($category instanceof \app\model\LinkModel);
+        $this -> assertTrue($link instanceof \app\model\LinkModel);
         
     }
     
     /**
      * @test
-     * @depends addCategory
-     * @depends editCategory
-     * @depends readCategory
-     * @depends listsCategory
+     * @depends add
+     * @depends edit
+     * @depends read
+     * @depends lists
      */
-    public function removeCategory ()
+    public function remove ()
     {
         try {
             $linkModel = \app\model\linkModel ::where([]) -> order('id', 'desc') -> find();
@@ -114,7 +113,7 @@ class TestLinkService extends TestCase
     /**
      * @test
      */
-    public function listsCategory ()
+    public function lists ()
     {
         $this -> assertIsObject(
             $collection = $this -> linkService -> lists()

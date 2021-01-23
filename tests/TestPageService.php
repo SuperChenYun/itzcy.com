@@ -4,7 +4,7 @@
 use app\service\CategoryService;
 use app\service\LinkService;
 
-class TestPageService extends TestCase
+class TestPageService extends TestAAACase
 {
     
     /**

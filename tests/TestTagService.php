@@ -5,7 +5,7 @@ declare(strict_types=1);
 use app\service\TagService;
 use think\App;
 
-class TestTagService extends TestCase
+class TestTagService extends TestAAACase
 {
     /**
      * @var TagService
