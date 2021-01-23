@@ -57,6 +57,11 @@ class TagService extends BaseService
      */
     public function tagEdit (TagModel $tagModel, string $tagName, string $tagSign, string $describes = '', string $keywords = '')
     {
+        // 拦截传入已删除的数据
+        if ($tagModel -> delete_time != 0) {
+            return false;
+        }
+        
         $tagModel -> tag_name  = $tagName;
         $tagModel -> tag_sign  = $tagSign;
         $tagModel -> describes = $describes;
@@ -79,7 +84,11 @@ class TagService extends BaseService
     public function tagRead (int $id)
     {
         try {
-            $tagModel = (new \app\model\TagModel) -> find($id);
+            $where = [
+                'delete_time' => 0
+            ];
+            
+            $tagModel = (new \app\model\TagModel) -> where($where)-> find($id);
             if ($tagModel) {
                 return $tagModel;
             }
@@ -101,16 +110,20 @@ class TagService extends BaseService
     {
         
         try {
-            if ($tagModel instanceof TagModel) {
-                if ($tagModel -> delete()) {
-                    return true;
-                }
-            } else {
+            if (!($tagModel instanceof TagModel)) {
                 $tagModel = (new \app\model\TagModel) -> find((int)$tagModel);
-                if ($tagModel -> delete()) {
-                    return true;
-                }
             }
+            
+            if (empty($tagModel)) {
+                return false;
+            }
+            
+            $tagModel -> delete_time = time();
+            
+            if ($tagModel -> save()) {
+                return true;
+            }
+            
             return false;
         } catch (DbException $e) {
             Log ::error($e -> getTraceAsString());
@@ -122,14 +135,17 @@ class TagService extends BaseService
      * 获取 TAG 列表
      *
      * @param array     $where
+     * @param array     $order
      * @param false|Int $page
      *
      * @return Collection|array
      */
-    public function tagList ($where = [], $page = false)
+    public function tagList ($where = [], $order = [], $page = false)
     {
         try {
             
+            $where = array_merge($where, ['delete_time' => 0]);
+        
             $tagModel = TagModel ::where($where);
             
             if ($page !== false) {
@@ -137,6 +153,9 @@ class TagService extends BaseService
                 $tagModel -> limit($this -> offset($page), $this -> pageRows);
             }
             
+            if (!empty($order)) {
+                $tagModel -> order($order);
+            }
             return $tagModel -> select();
             
         } catch (DbException $e) {
@@ -229,7 +248,7 @@ class TagService extends BaseService
         $id = $targetModel -> getData($targetModel -> getPk());
         
         // 如果没数据就返回 True
-        if(!TagRelationModel::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
+        if (!TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
             return true;
         }
         

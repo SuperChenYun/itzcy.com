@@ -77,7 +77,7 @@ class TestTagService extends TestCase
      */
     public function listTag ()
     {
-        $count = \app\model\TagModel ::where([]) -> count();
+        $count = \app\model\TagModel ::where(['delete_time' => 0]) -> count();
         
         $list = $this -> tagService -> tagList();
         
