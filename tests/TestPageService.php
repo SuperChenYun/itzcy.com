@@ -99,6 +99,7 @@ class TestPageService extends TestCase
      * @depends add
      * @depends edit
      * @depends read
+     * @depends views
      */
     public function removeCategory ()
     {
@@ -111,5 +112,16 @@ class TestPageService extends TestCase
         $this -> assertTrue($this -> pageService -> remove($pageModel -> id));
     }
     
-    
+    /**
+     * @test
+     * @depends read
+     */
+    public function views()
+    {
+        $pageModel = \app\model\pageModel ::where([]) -> order('id', 'desc') -> find();
+        $pageModel = $this->pageService->views($pageModel);
+        $this->assertIsObject($pageModel);
+        $this->assertTrue($pageModel instanceof \app\model\PageModel);
+        
+    }
 }

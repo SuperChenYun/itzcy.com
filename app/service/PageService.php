@@ -8,6 +8,7 @@ use app\BaseService;
 use app\model\CategoryModel;
 use app\model\PageModel;
 use think\db\exception\DbException;
+use think\facade\Db;
 use think\facade\Log;
 use think\Model;
 
@@ -77,7 +78,7 @@ class PageService extends BaseService
         
         $pageModel -> category_id   = $categoryModel -> id;
         $pageModel -> category_name = $categoryModel -> category_name;
-            
+        
         if ($pageModel -> save()) {
             return $pageModel;
         }
@@ -167,4 +168,23 @@ class PageService extends BaseService
         }
         
     }
+    
+    /**
+     * 快捷增加浏览量
+     *
+     * @param PageModel $pageModel
+     * @param int       $stepping
+     *
+     * @return PageModel|false
+     */
+    public function views (PageModel $pageModel, $stepping = 1)
+    {
+        $pageModel -> views = Db ::raw('views + ' . $stepping);
+        if ($pageModel -> save()) {
+            return $pageModel;
+        }
+        return false;
+        
+    }
+    
 }
