@@ -7,9 +7,7 @@ namespace app\service;
 use app\BaseService;
 use app\model\CategoryModel;
 use think\Collection;
-use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 use think\facade\Log;
 use think\Model;
 
