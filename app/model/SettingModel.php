@@ -11,4 +11,5 @@ use app\BaseModel;
 class SettingModel extends BaseModel
 {
     protected $name = 'setting';
+    protected $json = ['extend'];
 }

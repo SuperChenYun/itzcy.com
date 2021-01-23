@@ -41,6 +41,7 @@ class CreateCategoryTableV1 extends Migrator
             -> addColumn('delete_time', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '删除时间'))
             // 其他设置
             -> setPrimaryKey('id')
+            -> addIndex('category_sign', ['type' => 'unique', 'name' => 'i_u_category_sign'])
             -> setComment('分类表')
             -> create();
 

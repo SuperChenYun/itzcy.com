@@ -35,6 +35,7 @@ class CreateSettingTableV1 extends Migrator
             -> addColumn('delete_time', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '删除时间'))
             // 其他设置
             -> setPrimaryKey('id')
+            -> addIndex('key', ['type' => 'unique', 'name' => 'i_u_key'])
             -> setComment('系统设置表')
             -> create();
     }
