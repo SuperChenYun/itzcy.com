@@ -119,7 +119,7 @@ class LinkService extends BaseService
         try {
             
             if (!($link instanceof LinkModel)) {
-                $link = (new \app\model\CategoryModel) -> find((int)$link);
+                $link = (new \app\model\LinkModel()) -> find((int)$link);
             }
             
             if (empty($link)) {
