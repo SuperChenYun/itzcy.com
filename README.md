@@ -1,5 +1,7 @@
 # Itzcy.Com
 ------
+[![Build Status](http://drone.s.itzcy.com/api/badges/itzcy/itzcy.com/status.svg)](http://drone.s.itzcy.com/itzcy/itzcy.com)
+
 
 >  该项目基于`ThinkPHP`,为 [Itzcy.Com](https://itzcy.com) 的代码开源仓库  
 
