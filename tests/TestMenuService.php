@@ -26,7 +26,7 @@ class TestMenuService extends TestAAACase
     public function add ()
     {
         $menuTypes = $this -> menuService -> getMenuTypes();
-        $menu      = $this -> menuService -> addMenu('TestMenu', 'http://10.10.1.11', $menuTypes -> shift(), '');
+        $menu      = $this -> menuService -> addMenu('TestMenu', 'http://10.10.1.11', $menuTypes -> shift(), 'TEST_MENU'.time());
         
         $this -> assertIsObject($menu);
         $this -> assertTrue($menu instanceof \app\model\MenuModel);
