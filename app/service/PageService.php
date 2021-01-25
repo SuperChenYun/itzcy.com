@@ -7,6 +7,7 @@ namespace app\service;
 use app\BaseService;
 use app\model\CategoryModel;
 use app\model\PageModel;
+use think\Collection;
 use think\db\exception\DbException;
 use think\facade\Db;
 use think\facade\Log;
@@ -143,13 +144,13 @@ class PageService extends BaseService
      * @param array $order
      * @param false $page
      *
-     * @return array
+     * @return array|Collection
      */
     public function lists ($where = [], $order = [], $page = false)
     {
         try {
             
-            $pageModel = PageService ::where($where);
+            $pageModel = PageModel ::where('delete_time', 0) -> where($where);
             
             if ($page !== false) {
                 // 需要分页查询

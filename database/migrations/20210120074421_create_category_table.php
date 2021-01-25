@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreateCategoryTableV1 extends Migrator
+class CreateCategoryTable extends Migrator
 {
     /**
      * Change Method.

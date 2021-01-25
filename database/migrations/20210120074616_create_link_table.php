@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreateLinkTableV1 extends Migrator
+class CreateLinkTable extends Migrator
 {
     /**
      * Change Method.

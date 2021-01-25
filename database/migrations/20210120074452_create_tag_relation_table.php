@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreateSettingTableV1 extends Migrator
+class CreateTagRelationTable extends Migrator
 {
     /**
      * Change Method.
@@ -23,20 +23,19 @@ class CreateSettingTableV1 extends Migrator
      */
     public function change ()
     {
+        
         // create the table
-        $table = $this -> table('setting', array('engine' => 'InnoDB'));
-        $table -> addColumn('key', 'string', array('limit' => 128, 'default' => '', 'comment' => '键'))
-            -> addColumn('value', 'string', array('limit' => 512, 'default' => '', 'comment' => '值'))
-            -> addColumn('order', 'integer', array('limit' => 11, 'default' => 0, 'comment' => '排序'))
-            -> addColumn('extend', 'string', array('limit' => 512, 'default' => '{}', 'comment' => '扩展'))
+        $table = $this -> table('tag_relation', array('engine' => 'InnoDB'));
+        $table -> addColumn('tag_id', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '标签id'))
+            -> addColumn('relation_type', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '关联类型'))
+            -> addColumn('target_id', 'biginteger', array('limit' => 20, 'default' =>  0, 'comment' => '目标ID'))
             // 时间信息
             -> addColumn('create_time', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '添加时间'))
             -> addColumn('update_time', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '修改时间'))
             -> addColumn('delete_time', 'biginteger', array('limit' => 20, 'default' => 0, 'comment' => '删除时间'))
             // 其他设置
             -> setPrimaryKey('id')
-            -> addIndex('key', ['type' => 'unique', 'name' => 'i_u_key'])
-            -> setComment('系统设置表')
+            -> setComment('标签关联表')
             -> create();
     }
 }

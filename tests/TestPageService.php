@@ -48,7 +48,7 @@ class TestPageService extends TestAAACase
     {
         
         try {
-            $pageModel     = \app\model\pageModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
+            $pageModel     = \app\model\PageModel ::where(['delete_time' => 0]) -> order('id', 'desc') -> find();
             $categoryModel = \app\model\CategoryModel ::where([]) -> order('id', 'desc') -> find();
             
         } catch (\think\db\exception\DbException $e) {
@@ -71,7 +71,7 @@ class TestPageService extends TestAAACase
                 ]
             )
         );
-        $this -> assertTrue($page instanceof \app\model\pageModel);
+        $this -> assertTrue($page instanceof \app\model\PageModel);
     }
     
     /**
@@ -104,7 +104,7 @@ class TestPageService extends TestAAACase
     public function remove ()
     {
         try {
-            $pageModel = \app\model\pageModel ::where([]) -> order('id', 'desc') -> find();
+            $pageModel = \app\model\PageModel ::where([]) -> order('id', 'desc') -> find();
         } catch (\think\db\exception\DbException $e) {
             return false;
         }
@@ -112,6 +112,9 @@ class TestPageService extends TestAAACase
         $this -> assertTrue($this -> pageService -> remove($pageModel -> id));
     }
     
+    /**
+     * @test
+     */
     public function lists()
     {
         $count = \app\model\PageModel ::where(['delete_time' => 0]) -> count();
@@ -126,7 +129,7 @@ class TestPageService extends TestAAACase
      */
     public function views()
     {
-        $pageModel = \app\model\pageModel ::where([]) -> order('id', 'desc') -> find();
+        $pageModel = \app\model\PageModel ::where([]) -> order('id', 'desc') -> find();
         $pageModel = $this->pageService->views($pageModel);
         $this->assertIsObject($pageModel);
         $this->assertTrue($pageModel instanceof \app\model\PageModel);
