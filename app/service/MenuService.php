@@ -80,7 +80,7 @@ class MenuService extends BaseService
     {
         
         // 查询 menu_sign 是否被占用
-        if ($this -> hasMenuSign($menuSign, [['id', '<>', $menu -> id]])) {
+        if ( $this -> hasMenuSign( $menuSign, [ ['id', '<>', $menu -> id] ] ) ) {
             return false;
         }
         
@@ -243,17 +243,15 @@ class MenuService extends BaseService
     private function hasMenuSign ($menuSign = null, array $exclude = []): bool
     {
         try {
-            
             if ($menuSign === null) {
+                return false;
+            }
+            $oldMenu = MenuModel ::where($exclude) -> where('delete_time', 0) -> where('menu_sign', $menuSign) -> find();
+            if (!empty($oldMenu)) {
                 return true;
             }
             
-            $oldMenu = MenuModel ::where($exclude) -> where('delete_time', 0) -> where('menu_sign', $menuSign) -> find();
-            if (!empty($oldMenu)) {
-                return false;
-            }
-            
-            return true;
+            return false;
             
         } catch (DbException $e) {
             $this -> handleException($e);
