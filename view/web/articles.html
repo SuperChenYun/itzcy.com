@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <title>文章列表</title>
+    <meta name="keywords" content="{$setting.site_keywords}">
+    <meta name="description" content="{$setting.site_description}">
+    {include file="public/meta"}
+
+</head>
+<body>
+{include file="public/header"}
+
+<div class="featured_image">
+    <div class="img" style="background-image: url({$articles[0]['featured_image']});"></div>
+</div>
+
+<div class="container">
+    <div>
+        {volist name="articles" id="article"}
+        <li>
+            <div>
+                <img style="max-width: 500px" src="{$article.featured_image}" />
+                <a href="/article/{$article.id}">{$article.title}</a>
+            </div>
+        </li>
+        {/volist}
+    </div>
+</div>
+{include file="public/footer"}
+</body>
+{include file="public/js"}
+</html>

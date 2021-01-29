@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <title>{$article.title} - {$setting.site_name}</title>
+    {include file="public/meta"}
+    <meta name="keywords" content="{$article.keywords}">
+    <meta name="description" content="{$article.describes}">
+</head>
+<body>
+{include file="public/header"}
+<div class="featured_image">
+    <div class="img" style="background-image: url({$article.featured_image});"></div>
+</div>
+<div class="container article">
+    <h2>{$article.title}</h2>
+    <div class="article-describe">
+        {$article.create_time}
+    </div>
+    <div class="article-tag">
+        {volist name="article.tagList" id="tag"}
+            <span style="background-color: {$tag -> getColor()}">{$tag.tag_name}</span>
+        {/volist}
+    </div>
+    <div class="article-content " id="article-content">
+        {$article.content|raw}
+    </div>
+</div>
+{include file="public/footer"}
+</body>
+{include file="public/js"}
+</html>

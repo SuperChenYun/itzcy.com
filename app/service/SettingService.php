@@ -56,7 +56,7 @@ class SettingService extends BaseService
             }
             return false;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
         
@@ -83,7 +83,7 @@ class SettingService extends BaseService
             $settingModel -> value = call_user_func($filter, $settingModel -> value);;
             return $settingModel;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
         
@@ -115,8 +115,23 @@ class SettingService extends BaseService
             }
             return $settings;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return [];
         }
+    }
+    
+    /**
+     * @param Collection $collection
+     *
+     * @return array
+     */
+    public function toKV (Collection $collection): array
+    {
+        $kv = [];
+        foreach ($collection as $value) {
+            $kv[$value['key']] = $value['value'];
+        }
+        return $kv;
+        
     }
 }

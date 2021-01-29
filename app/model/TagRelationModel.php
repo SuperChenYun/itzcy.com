@@ -22,4 +22,5 @@ class TagRelationModel extends BaseModel
     {
         return $this -> hasOne(TagModel::class, 'id', 'tag_id') -> bind(['tag_name','tag_sign']);
     }
+    
 }

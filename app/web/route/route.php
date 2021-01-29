@@ -15,3 +15,19 @@ Route::miss(function() {
 });
 
 Route::get('/', 'index/index');
+
+// 文章详情
+Route::rule('article/:id', 'Article/read');
+
+// 文章列表
+Route::rule('article', 'Article/lists');
+
+// 分类文章列表
+Route::rule('category/:sign', 'Article/byCategory');
+
+// Tag文章列表
+Route::rule('tag/:sign','Article/byTag');
+
+// 页面详情
+Route::rule('page/:id', 'Page/read');
+

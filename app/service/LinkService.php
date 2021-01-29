@@ -101,7 +101,7 @@ class LinkService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\LinkModel()) -> where($where) -> find($id);
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
         
@@ -133,7 +133,7 @@ class LinkService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
         
@@ -152,6 +152,7 @@ class LinkService extends BaseService
     {
         try {
             
+            $where     = array_merge($where, ['delete_time' => 0]);
             $linkModel = LinkModel ::where($where);
             
             if ($page !== false) {
@@ -166,7 +167,7 @@ class LinkService extends BaseService
             return $linkModel -> select();
             
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return [];
         }
         

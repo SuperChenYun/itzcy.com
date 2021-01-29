@@ -131,15 +131,15 @@ class ArticleService extends BaseService
         
         $articleModel -> category_id   = $categoryModel -> id;
         $articleModel -> category_name = $categoryModel -> category_name;
-
+        
         if (!$articleModel -> save()) {
             Db ::rollback();
             return false;
         }
-    
+        
         // 修改 Tag Relation
         $relationSaveStatus = $this -> tagService -> relationEdit($articleModel, ArticleModel::TARGET_TYPE, $tagModelList);
-
+        
         if ($relationSaveStatus) {
             Db ::commit();
             return $articleModel;
@@ -212,6 +212,8 @@ class ArticleService extends BaseService
     public function lists ($where = [], $order = [], $page = false)
     {
         try {
+            
+            $where = array_merge($where, ['delete_time' => 0]);
             
             $articleModel = ArticleModel ::where($where);
             
