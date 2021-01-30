@@ -27,10 +27,10 @@
         </div>
         {/if}
 
-        {if condition="!$extMenu-> isEmpty()"}
+        {if condition="!$footerExtMenu-> isEmpty()"}
         <div class="ext-menu ">
             <ul>
-                {volist name="$extMenu" id="menu"}
+                {volist name="$footerExtMenu" id="menu"}
                     <li><a {if condition="$menu.is_target_blank"}target="_blank"{/if} href="{$menu.menu_link}" >{$menu.menu_text}</a></li>
                 {/volist}
             </ul>

@@ -10,22 +10,33 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::miss('Error/e404');
+Route ::miss('Error/e404');
 
-Route::get('/', 'Index/index');
+Route ::get('/', 'Index/index');
 
 // 文章详情
-Route::rule('article/:id', 'Article/read');
+Route ::rule('article/:id', 'Article/read');
 
 // 文章列表
-Route::rule('article', 'Article/lists');
+Route ::rule('article', 'Article/lists');
 
 // 分类文章列表
-Route::rule('category/:sign', 'Article/byCategory');
+Route ::rule('category/:sign', 'Article/byCategory');
 
 // Tag文章列表
-Route::rule('tag/:sign','Article/byTag');
+Route ::rule('tag/:sign', 'Article/byTag');
 
 // 页面详情
-Route::rule('page/:id', 'Page/read');
+Route ::rule('page/:id', 'Page/read');
+
+// 归档页面
+Route ::rule('archives', 'Archives/index');
+
+// Rss订阅
+Route ::rule('rss', 'Xml/rss');
+Route ::rule('rss.xml', 'Xml/rss');
+
+// SiteMap
+Route ::rule('sitemap', 'Xml/sitemap');
+Route ::rule('sitemap.xml', 'Xml/sitemap');
 

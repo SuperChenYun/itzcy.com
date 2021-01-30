@@ -80,7 +80,7 @@ class MenuService extends BaseService
     {
         
         // 查询 menu_sign 是否被占用
-        if ( $this -> hasMenuSign( $menuSign, [ ['id', '<>', $menu -> id] ] ) ) {
+        if ($this -> hasMenuSign($menuSign, [['id', '<>', $menu -> id]])) {
             return false;
         }
         
@@ -210,12 +210,16 @@ class MenuService extends BaseService
     /**
      * menuTree 获取改Menu分类下的树形Menu结构
      *
-     * @param MenuModel $menuModel
+     * @param MenuModel|null $menuModel
      *
      * @return Collection
      */
-    public function menuTree (MenuModel $menuModel)
+    public function menuTree (MenuModel $menuModel = null)
     {
+        if ($menuModel === null) {
+            return Collection ::make();
+        }
+        
         try {
             
             $menus = MenuModel ::where('delete_time', 0) -> select();
