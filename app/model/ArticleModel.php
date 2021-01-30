@@ -19,7 +19,7 @@ class ArticleModel extends BaseModel
     /**
      * @return HasOne
      */
-    public function category()
+    public function category (): HasOne
     {
         return $this -> hasOne(CategoryModel::class, 'id', 'category_id');
     }
@@ -27,8 +27,20 @@ class ArticleModel extends BaseModel
     /**
      * @return HasMany
      */
-    public function tagList()
+    public function tagList (): HasMany
     {
-        return $this->hasMany(TagRelationModel::class, 'target_id', 'id') -> where(['relation_type' => self::TARGET_TYPE]);
+        return $this -> hasMany(TagRelationModel::class, 'target_id', 'id') -> where(['relation_type' => self::TARGET_TYPE]);
+    }
+    
+    /**
+     * @return string
+     */
+    public function getDescribe (): string
+    {
+        $content = $this -> content;
+        $content = str_replace(["&nbsp;", "&amp;nbsp;", "\t", "\r\n", "\r", "\n"], ['', '', '', '', '', ''], $content);
+        $content = strip_tags($content);
+        
+        return mb_substr($content, 0, 120) . '...';
     }
 }

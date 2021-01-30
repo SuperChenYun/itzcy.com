@@ -13,6 +13,8 @@ use app\service\TagService;
 use app\web\BaseController;
 use think\App;
 use think\facade\View;
+use think\Paginator;
+use think\service\PaginatorService;
 
 /**
  * @property CategoryService categoryService
@@ -49,8 +51,11 @@ class Article extends BaseController
     {
         $articles = $this -> articleService -> lists([], ['id' => 'desc'], $this -> page);
 
+        $paginator = Paginator::make([], $this->pageRows, $this->page, $this->articleService->count(), false, ['path'=>'/article']);
+        
         return View ::fetch('articles', [
-            'articles' => $articles
+            'articles' => $articles,
+            'paginator' => $paginator
         ]);
     }
     

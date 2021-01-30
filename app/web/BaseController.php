@@ -23,10 +23,14 @@ abstract class BaseController extends \app\BaseController
      */
     protected $page;
     
+    protected $pageRows = 15;
+    
+    
     public function __construct (App $app, MenuService $menuService, LinkService $linkService, SettingService $settingService)
     {
         parent ::__construct($app);
-        $this -> page           = $this -> request -> param('page', 1);
+        $this -> page           = $app -> request -> param('page', 1);
+        $this -> pageRows       = $app -> request -> param('limit', $this -> pageRows);
         $this -> menuService    = $menuService;
         $this -> linkService    = $linkService;
         $this -> settingService = $settingService;
@@ -47,11 +51,11 @@ abstract class BaseController extends \app\BaseController
         $setting = $this -> settingService -> toKV($this -> settingService -> lists());
         
         View ::assign([
-            'mainMenu' => $mainMenu,
-            'extMenu'  => $extMenu,
+            'mainMenu'   => $mainMenu,
+            'extMenu'    => $extMenu,
             'footerMenu' => $footerMenu,
-            'links'    => $links,
-            'setting'  => $setting
+            'links'      => $links,
+            'setting'    => $setting
         ]);
     }
     

@@ -5,7 +5,6 @@
     <meta name="keywords" content="{$setting.site_keywords}">
     <meta name="description" content="{$setting.site_description}">
     {include file="public/meta"}
-
 </head>
 <body>
 {include file="public/header"}
@@ -14,17 +13,37 @@
     <div class="img" style="background-image: url({$articles[0]['featured_image']});"></div>
 </div>
 
-<div class="container">
-    <div>
-        {volist name="articles" id="article"}
-        <li>
-            <div>
-                <img style="max-width: 500px" src="{$article.featured_image}" />
-                <a href="/article/{$article.id}">{$article.title}</a>
+<div class="container article-list">
+    <div class="row">
+        <div class="articles col-lg-9 col-md-12 col-sm-12 col-12" id="articles">
+            {volist name="articles" id="article"}
+            <li>
+                <div class="article-item row">
+
+                    <div class=" col-lg-4 col-md-4 col-sm-12 col-12">
+                        <a href="/article/{$article.id}"><img src="{$article.featured_image}"/></a>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                        <h3 class="article-title"><a href="/article/{$article.id}">{$article.title}</a></h3>
+                        <div class="article-describe"><a href="/article/{$article.id}">{$article -> getDescribe()}</a></div>
+                        <div class="article-other">{$article.create_time} {$article.views}</div>
+                    </div>
+
+
+                </div>
+            </li>
+            {/volist}
+            <div class="row page col-lg-9 col-md-12 col-sm-12 col-12">
+                {$paginator->render()|raw}
             </div>
-        </li>
-        {/volist}
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+            sdfasf
+        </div>
     </div>
+
 </div>
 {include file="public/footer"}
 </body>

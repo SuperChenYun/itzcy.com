@@ -251,4 +251,20 @@ class ArticleService extends BaseService
         return false;
         
     }
+    
+    /**
+     * 统计总数
+     *
+     * @param array $where
+     *
+     * @return int
+     */
+    public function count($where = []): int
+    {
+        $where = array_merge($where, ['delete_time' => 0]);
+    
+        $articleModel = ArticleModel ::where($where);
+    
+        return $articleModel -> count('id');
+    }
 }
