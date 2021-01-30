@@ -50,11 +50,17 @@ class Article extends BaseController
     public function lists (): string
     {
         $articles = $this -> articleService -> lists([], ['id' => 'desc'], $this -> page);
-
+    
+        $categorys = $this->categoryService->lists();
+        
+        $tags = $this->tagService -> tagList();
+        
         $paginator = Paginator::make([], $this->pageRows, $this->page, $this->articleService->count(), false, ['path'=>'/article']);
         
         return View ::fetch('articles', [
             'articles' => $articles,
+            'categorys' => $categorys,
+            'tags' => $tags,
             'paginator' => $paginator
         ]);
     }

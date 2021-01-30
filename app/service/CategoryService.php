@@ -82,7 +82,7 @@ class CategoryService extends BaseService
             $where = ['delete_time' => 0];
             return (new \app\model\CategoryModel) -> where($where) -> find($id);
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
     }
@@ -111,7 +111,7 @@ class CategoryService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
     }
@@ -129,6 +129,8 @@ class CategoryService extends BaseService
     {
         try {
             
+            $where = array_merge($where, ['delete_time' => 0]);
+            
             $categoryModel = CategoryModel ::where($where);
             
             if ($page !== false) {
@@ -143,7 +145,7 @@ class CategoryService extends BaseService
             return $categoryModel -> select();
             
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return [];
         }
     }

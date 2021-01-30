@@ -94,7 +94,7 @@ class TagService extends BaseService
             }
             return false;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
     }
@@ -126,7 +126,7 @@ class TagService extends BaseService
             
             return false;
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
     }
@@ -159,8 +159,8 @@ class TagService extends BaseService
             return $tagModel -> select();
             
         } catch (DbException $e) {
-            $this->handleException($e);
-            return [];
+            $this -> handleException($e);
+            return Collection ::make([]);
         }
     }
     
@@ -229,7 +229,7 @@ class TagService extends BaseService
         try {
             return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> with(['tag']) -> select();
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return [];
         }
     }
@@ -247,15 +247,15 @@ class TagService extends BaseService
         try {
             // 获取目标的id
             $id = $targetModel -> getData($targetModel -> getPk());
-    
+            
             // 如果没数据就返回 True
             if (!TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> find()) {
                 return true;
             }
-    
+            
             return TagRelationModel ::where(['target_id' => $id, 'relation_type' => $type]) -> delete();
         } catch (DbException $e) {
-            $this->handleException($e);
+            $this -> handleException($e);
             return false;
         }
         

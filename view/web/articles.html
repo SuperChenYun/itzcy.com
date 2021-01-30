@@ -40,7 +40,26 @@
         </div>
 
         <div class="col-lg-3 col-md-12 col-sm-12 col-12">
-            sdfasf
+            <div class="categorys">
+                <h4>文章分类</h4>
+                <div class="" style="min-height: 200px;">
+                    <ul class="list-group list-group-flush">
+                        {volist name="categorys" id="category"}
+                        <li class="list-group-item"><a href="/category/{$category.category_sign}">{$category.category_name}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <div class="tag-cloud">
+                <h4>标签云</h4>
+                <div class="article-tag" >
+                    {volist name="tags" id="tag"}
+                    <span class="" style="background-color: {$tag->getColor()}">
+                        <a href="/tag/{$tag.tag_sign}">{$tag.tag_name}</a>
+                    </span>
+                    {/volist}
+                </div>
+            </div>
         </div>
     </div>
 
