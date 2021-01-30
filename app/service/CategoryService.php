@@ -79,8 +79,25 @@ class CategoryService extends BaseService
     public function read (int $id)
     {
         try {
-            $where = ['delete_time' => 0];
+            $where = $this->whereMergeDeleteTime([]);
             return (new \app\model\CategoryModel) -> where($where) -> find($id);
+        } catch (DbException $e) {
+            $this -> handleException($e);
+            return false;
+        }
+    }
+    
+    /**
+     * @param String $sign
+     *
+     * @return array|false|Model|null
+     */
+    public function readBySign(String $sign)
+    {
+        try {
+            $where['delete_time'] = 0;
+            $where['category_sign'] = $sign;
+            return (new \app\model\CategoryModel) -> where($where) -> find();
         } catch (DbException $e) {
             $this -> handleException($e);
             return false;
@@ -128,8 +145,8 @@ class CategoryService extends BaseService
     public function lists ($where = [], $order = [], $page = false)
     {
         try {
-            
-            $where = array_merge($where, ['delete_time' => 0]);
+    
+            $where = $this->whereMergeDeleteTime($where);
             
             $categoryModel = CategoryModel ::where($where);
             

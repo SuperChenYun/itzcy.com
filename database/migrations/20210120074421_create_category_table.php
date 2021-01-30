@@ -31,7 +31,7 @@ class CreateCategoryTable extends Migrator
         $table = $this -> table('category', array('engine' => 'InnoDB'));
         $table -> addColumn('category_name', 'string', array('limit' => 64, 'default' => '', 'comment' => '分类名'))
             -> addColumn('category_sign', 'string', array('limit' => 64, 'default' => '', 'comment' => '分类唯一标识'))
-            -> addColumn('featured_image', 'string', array('limit' => 256, 'default' => '', 'comment' => '文章图'))
+            -> addColumn('featured_image', 'string', array('limit' => 256, 'default' => '', 'comment' => '特色图像'))
             // SEO
             -> addColumn('describes', 'string', array('limit' => 512, 'default' => '', 'comment' => '简介用于SEO'))
             -> addColumn('keywords', 'string', array('limit' => 512, 'default' => '', 'comment' => '关键字用于SEO'))

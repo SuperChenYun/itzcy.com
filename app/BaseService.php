@@ -38,6 +38,23 @@ abstract class BaseService
     }
     
     /**
+     * 合并where条件
+     *
+     * @param array $where
+     *
+     * @return array
+     */
+    protected function whereMergeDeleteTime (array $where = []): array
+    {
+        if (count($where) > 0 && isset($where[0]) && is_array($where[0])) {
+            $where[] = ['delete_time', '=', 0];
+        } else {
+            $where = array_merge($where, ['delete_time' => 0]);
+        }
+        return $where;
+    }
+    
+    /**
      * @param Exception $e
      */
     public function handleException ($e)

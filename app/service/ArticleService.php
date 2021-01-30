@@ -159,7 +159,7 @@ class ArticleService extends BaseService
     public function read (int $id)
     {
         try {
-            $where = ['delete_time' => 0];
+            $where = $this->whereMergeDeleteTime([]);
             return (new \app\model\ArticleModel()) -> with(['category', 'tagList.tag']) -> where($where) -> find($id);
         } catch (DbException $e) {
             $this -> handleException($e);
@@ -213,7 +213,8 @@ class ArticleService extends BaseService
     {
         try {
             
-            $where = array_merge($where, ['delete_time' => 0]);
+            
+            $where = $this->whereMergeDeleteTime($where);
             
             $articleModel = ArticleModel ::where($where);
             
@@ -259,12 +260,12 @@ class ArticleService extends BaseService
      *
      * @return int
      */
-    public function count($where = []): int
+    public function count ($where = []): int
     {
-        $where = array_merge($where, ['delete_time' => 0]);
-    
+        $where = $this->whereMergeDeleteTime($where);
+        
         $articleModel = ArticleModel ::where($where);
-    
+        
         return $articleModel -> count('id');
     }
 }

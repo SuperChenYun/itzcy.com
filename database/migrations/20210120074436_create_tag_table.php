@@ -27,6 +27,7 @@ class CreateTagTable extends Migrator
         $table = $this -> table('tag', array('engine' => 'InnoDB'));
         $table -> addColumn('tag_name', 'string', array('limit' => 32, 'default' => '', 'comment' => '标签名'))
             -> addColumn('tag_sign', 'string', array('limit' => 128, 'default' => '', 'comment' => '标签唯一标识'))
+            -> addColumn('featured_image', 'string', array('limit' => 256, 'default' => '', 'comment' => '特色图像'))
             // SEO
             -> addColumn('describes', 'string', array('limit' => 512, 'default' => '', 'comment' => '简介用于SEO'))
             -> addColumn('keywords', 'string', array('limit' => 512, 'default' => '', 'comment' => '关键字用于SEO'))

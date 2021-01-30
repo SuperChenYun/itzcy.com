@@ -4,6 +4,7 @@
 namespace app\web\controller;
 
 
+use app\model\ArticleModel;
 use app\service\ArticleService;
 use app\service\CategoryService;
 use app\service\LinkService;
@@ -12,6 +13,7 @@ use app\service\SettingService;
 use app\service\TagService;
 use app\web\BaseController;
 use think\App;
+use think\Collection;
 use think\facade\View;
 use think\Paginator;
 use think\service\PaginatorService;
@@ -34,6 +36,13 @@ class Article extends BaseController
         
     }
     
+    /**
+     * 读取单个文章
+     *
+     * @param int $id
+     *
+     * @return string
+     */
     public function read (int $id): string
     {
         $article = $this -> articleService -> read($id);
@@ -47,30 +56,99 @@ class Article extends BaseController
         ]);
     }
     
+    /**
+     * 全部列表
+     * @return string
+     */
     public function lists (): string
     {
         $articles = $this -> articleService -> lists([], ['id' => 'desc'], $this -> page);
+        
+        $paginator = Paginator ::make([], $this -> pageRows, $this -> page, $this -> articleService -> count(), false, ['path' => '']);
     
-        $categorys = $this->categoryService->lists();
-        
-        $tags = $this->tagService -> tagList();
-        
-        $paginator = Paginator::make([], $this->pageRows, $this->page, $this->articleService->count(), false, ['path'=>'/article']);
-        
+        $this -> assignArticleBaseData();
+    
         return View ::fetch('articles', [
-            'articles' => $articles,
-            'categorys' => $categorys,
-            'tags' => $tags,
+            'articles'  => $articles,
             'paginator' => $paginator
         ]);
     }
     
+    /**
+     * 按分类查询
+     *
+     * @param string $sign
+     *
+     * @return string
+     */
     public function byCategory (string $sign)
     {
+        $category = $this -> categoryService -> readBySign($sign);
+        
+        $articlesWhere = ['category_id' => $category -> id];
+        $articles      = $this -> articleService -> lists($articlesWhere, ['id' => 'desc'], $this -> page);
+        
+        
+        $paginator = Paginator ::make([], $this -> pageRows, $this -> page, $this -> articleService -> count($articlesWhere), false, ['path' => ""]);
+        
+        $this -> assignArticleBaseData();
+        
+        return View ::fetch('category_articles', [
+            'category'  => $category,
+            'articles'  => $articles,
+            'paginator' => $paginator
+        ]);
     }
     
+    /**
+     * 按标签查询
+     *
+     * @param string $sign
+     *
+     * @return string
+     */
     public function byTag (string $sign)
     {
+        $tag = $this -> tagService -> tagReadBySign($sign);
+        
+        if (empty($tag)) {
+            return View ::fetch('error/404');
+        }
+        
+        $tagRelation = $this -> tagService -> relationReadByTag($tag, ArticleModel::TARGET_TYPE);
+        
+        $articles = Collection ::make();
+        $count    = 1;
+        
+        if (!$tagRelation -> isEmpty()) {
+            
+            $articlesWhere = [
+                ['id', 'in', array_column($tagRelation -> toArray(), 'target_id')]
+            ];
+            
+            $articles = $this -> articleService -> lists($articlesWhere, ['id' => 'desc'], $this -> page);
+            
+            $count = $this -> articleService -> count($articlesWhere);
+        }
+        
+        
+        $paginator = Paginator ::make([], $this -> pageRows, $this -> page, $count, false, ['path' => '']);
+        
+        $this -> assignArticleBaseData();
+        
+        return View ::fetch('tag_articles', [
+            'tag'       => $tag,
+            'articles'  => $articles,
+            'paginator' => $paginator
+        ]);
+        
+    }
     
+    private function assignArticleBaseData ()
+    {
+        View ::assign([
+            'categorys' => $this -> categoryService -> lists(),
+            'tags'      => $this -> tagService -> tagList(),
+        ]);
     }
 }

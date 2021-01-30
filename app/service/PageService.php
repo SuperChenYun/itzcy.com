@@ -96,7 +96,7 @@ class PageService extends BaseService
     public function read (int $id)
     {
         try {
-            $where = ['delete_time' => 0];
+            $where = $this->whereMergeDeleteTime([]);
             return (new \app\model\PageModel()) -> where($where) -> find($id);
         } catch (DbException $e) {
             $this->handleException($e);

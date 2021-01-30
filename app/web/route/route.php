@@ -10,11 +10,9 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::miss(function() {
-    return view('error/404');
-});
+Route::miss('Error/e404');
 
-Route::get('/', 'index/index');
+Route::get('/', 'Index/index');
 
 // 文章详情
 Route::rule('article/:id', 'Article/read');

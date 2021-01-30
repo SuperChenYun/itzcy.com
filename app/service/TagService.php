@@ -9,6 +9,7 @@ use app\model\TagRelationModel;
 use think\Collection;
 use think\db\exception\DbException;
 use think\facade\Log;
+use think\Model;
 
 /**
  * 标签管理类
@@ -84,15 +85,31 @@ class TagService extends BaseService
     public function tagRead (int $id)
     {
         try {
-            $where = [
-                'delete_time' => 0
-            ];
-            
+            $where = $this->whereMergeDeleteTime([]);
+    
+    
             $tagModel = (new \app\model\TagModel) -> where($where) -> find($id);
             if ($tagModel) {
                 return $tagModel;
             }
             return false;
+        } catch (DbException $e) {
+            $this -> handleException($e);
+            return false;
+        }
+    }
+    
+    /**
+     * @param String $sign
+     *
+     * @return array|false|Model|null
+     */
+    public function tagReadBySign (string $sign)
+    {
+        try {
+            $where['delete_time'] = 0;
+            $where['tag_sign']    = $sign;
+            return (new \app\model\TagModel()) -> where($where) -> find();
         } catch (DbException $e) {
             $this -> handleException($e);
             return false;
@@ -143,8 +160,8 @@ class TagService extends BaseService
     public function tagList ($where = [], $order = [], $page = false)
     {
         try {
-            
-            $where = array_merge($where, ['delete_time' => 0]);
+    
+            $where = $this->whereMergeDeleteTime($where);
             
             $tagModel = TagModel ::where($where);
             
@@ -259,6 +276,24 @@ class TagService extends BaseService
             return false;
         }
         
+    }
+    
+    /**
+     * 通过tag 获取tag下的target
+     *
+     * @param TagModel $tagModel
+     * @param int      $type
+     *
+     * @return array|Collection
+     */
+    public function relationReadByTag (TagModel $tagModel, int $type)
+    {
+        try {
+            return TagRelationModel ::where(['tag_id' => $tagModel -> id, 'relation_type' => $type]) -> select();
+        } catch (DbException $e) {
+            $this -> handleException($e);
+            return Collection::make([]);
+        }
     }
     
 }

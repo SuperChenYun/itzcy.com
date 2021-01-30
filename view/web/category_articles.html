@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <title>文章列表</title>
+    <meta name="keywords" content="{$category.keywords}">
+    <meta name="description" content="{$category.describes}">
+    {include file="public/meta"}
+</head>
+<body>
+{include file="public/header"}
+
+<div class="featured_image">
+    <div class="img" style="background-image: url({$category['featured_image']});"></div>
+</div>
+
+<div class="container article-list">
+    <div class="row">
+        <div class="articles col-lg-9 col-md-12 col-sm-12 col-12" id="articles">
+            {volist name="articles" id="article"}
+            <li>
+                <div class="article-item row">
+
+                    <div class=" col-lg-4 col-md-4 col-sm-12 col-12">
+                        <a href="/article/{$article.id}"><img src="{$article.featured_image}"/></a>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                        <h3 class="article-title"><a href="/article/{$article.id}">{$article.title}</a></h3>
+                        <div class="article-describe"><a href="/article/{$article.id}">{$article -> getDescribe()}</a></div>
+                        <div class="article-other">{$article.create_time} {$article.views}</div>
+                    </div>
+
+
+                </div>
+            </li>
+            {/volist}
+            <div class="row page col-lg-9 col-md-12 col-sm-12 col-12">
+                {$paginator->render()|raw}
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="categorys">
+                <h4>文章分类</h4>
+                <div class="" style="min-height: 200px;">
+                    <ul class="list-group list-group-flush">
+                        {volist name="categorys" id="category"}
+                        <li class="list-group-item"><a href="/category/{$category.category_sign}">{$category.category_name}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <div class="tag-cloud">
+                <h4>标签云</h4>
+                <div class="article-tag" >
+                    {volist name="tags" id="tag"}
+                    <span class="" style="background-color: {$tag->getColor()}">
+                        <a href="/tag/{$tag.tag_sign}">{$tag.tag_name}</a>
+                    </span>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{include file="public/footer"}
+</body>
+{include file="public/js"}
+</html>
