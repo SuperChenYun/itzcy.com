@@ -18,7 +18,6 @@ class Page extends BaseController
     public function about(): string
     {
         return View::fetch('page/about');
-    
     }
     
     public function resume(): string
