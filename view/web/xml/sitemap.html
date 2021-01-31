@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="{:request() -> domain()}/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{:request() -> domain()}</loc>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{:request() -> domain()}/article</loc>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{:request() -> domain()}/about</loc>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{:request() -> domain()}/resume</loc>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{:request() -> domain()}/archives</loc>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+    {volist name="categorys" id="category"}
+    <url>
+        <loc>{:request() -> domain()}/category/{$category.category_sign}</loc>
+        <changefreq>Daily</changefreq>
+        <priority>0.9</priority>
+        <lastmod>{$category.update_time}</lastmod>
+    </url>
+    {/volist}
+    {volist name="tags" id="tag"}
+    <url>
+        <loc>{:request() -> domain()}/tag/{$tag.tag_sign}</loc>
+        <changefreq>Daily</changefreq>
+        <priority>0.9</priority>
+        <lastmod>{$tag.update_time}</lastmod>
+    </url>
+    {/volist}
+    {volist name="articles" id="article"}
+    <url>
+        <loc>{:request() -> domain()}/article/{$article.id}</loc>
+        <changefreq>Daily</changefreq>
+        <priority>0.8</priority>
+        <lastmod>{$article.update_time}</lastmod>
+    </url>
+    {/volist}
+</urlset>

@@ -159,7 +159,7 @@ class ArticleService extends BaseService
     public function read (int $id)
     {
         try {
-            $where = $this->whereMergeDeleteTime([]);
+            $where = $this -> whereMergeDeleteTime([]);
             return (new \app\model\ArticleModel()) -> with(['category', 'tagList.tag']) -> where($where) -> find($id);
         } catch (DbException $e) {
             $this -> handleException($e);
@@ -214,7 +214,7 @@ class ArticleService extends BaseService
         try {
             
             
-            $where = $this->whereMergeDeleteTime($where);
+            $where = $this -> whereMergeDeleteTime($where);
             
             $articleModel = ArticleModel ::where($where);
             
@@ -262,10 +262,40 @@ class ArticleService extends BaseService
      */
     public function count ($where = []): int
     {
-        $where = $this->whereMergeDeleteTime($where);
+        $where = $this -> whereMergeDeleteTime($where);
         
         $articleModel = ArticleModel ::where($where);
         
         return $articleModel -> count('id');
+    }
+    
+    /**
+     * 按年归档
+     * @return  array
+     */
+    public function archives (): array
+    {
+        $articles = $this -> lists([], ['id' => 'desc']);
+        
+        $archives = [];
+        foreach ($articles as $article) {
+            $year              = date('Y', strtotime($article -> create_time));
+            $archives[$year][] = [
+                'id'          => $article -> id,
+                'title'       => $article -> title,
+                'create_time' => $article -> create_time
+            ];
+        }
+        // 转换数组格式
+        $years = array_keys($archives);
+        // rsort($years, SORT_DESC);
+        $newArchives = [];
+        foreach ($years as $year) {
+            $newArchives[] = [
+                'year'     => $year,
+                'articles' => $archives[$year]
+            ];
+        }
+        return $newArchives;
     }
 }
