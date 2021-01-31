@@ -14,6 +14,12 @@ Route ::miss('Error/e404');
 
 Route ::get('/', 'Index/index');
 
+// About
+Route ::rule('about', 'Page/about');
+
+// Resume
+Route ::rule('resume', 'Page/resume');
+
 // 文章详情
 Route ::rule('article/:id', 'Article/read');
 
