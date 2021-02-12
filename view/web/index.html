@@ -87,6 +87,7 @@
   document.onclick = i
   document.ontouchstart = i
   i()
+  window.addEventListener('resize', function() {i()})
 </script>
 
 <script type="text/javascript">
