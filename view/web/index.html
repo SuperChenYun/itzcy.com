@@ -87,7 +87,13 @@
   document.onclick = i
   document.ontouchstart = i
   i()
-  window.addEventListener('resize', function() {i()})
+  window.addEventListener('resize', function() {
+    w = window.innerWidth
+    h = window.innerHeight - 260
+    c.width = w*pr
+    c.height = h*pr
+    i()
+  })
 </script>
 
 <script type="text/javascript">
