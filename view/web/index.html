@@ -48,6 +48,7 @@
     x = c.getContext('2d'),
     pr = isMobile() ? 1 : (window.devicePixelRatio || 1),
     w = window.innerWidth,
+    w = document.getElementsByTagName('html')[0].offsetWidth,
     h = window.innerHeight - 260,
     f = 20,
     q,
@@ -88,7 +89,7 @@
   document.ontouchstart = i
   i()
   window.addEventListener('resize', function() {
-    w = window.innerWidth
+    w = document.getElementsByTagName('html')[0].offsetWidth
     h = window.innerHeight - 260
     c.width = w*pr
     c.height = h*pr

@@ -614,3 +614,9 @@ footer .authorization div:last-child small {
 #home .home-btn:active {
     background: #f61947;
 }
+#home .container-fluid{
+    padding: 0;
+}
+#home canvas {
+    width: 100%;
+}
