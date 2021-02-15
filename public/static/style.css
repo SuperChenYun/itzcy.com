@@ -361,7 +361,7 @@ footer .authorization div:last-child small {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 10px;
-    text-shadow: 2px 1px 8px #0000005c;
+    /*text-shadow: 2px 1px 8px #0000005c;*/
 }
 
 .article-item .article-describe, .article-item .article-other {
@@ -445,7 +445,7 @@ footer .authorization div:last-child small {
 }
 
 .about-item h4, .about-item h5 {
-    text-shadow: 2px 1px 8px #0000005c;
+    /*text-shadow: 2px 1px 8px #0000005c;*/
     font-weight: bold;
     padding: 12px 0;
 }
@@ -469,7 +469,7 @@ footer .authorization div:last-child small {
 
 .about-item .about-item-content p {
     padding: 4px 0;
-    text-shadow: 1px 1px 6px #6e6e6e54;
+    /*text-shadow: 1px 1px 6px #6e6e6e54;*/
 }
 
 .about-item .about-item-content ul {
