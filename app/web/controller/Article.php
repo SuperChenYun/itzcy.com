@@ -16,6 +16,7 @@ use think\App;
 use think\Collection;
 use think\facade\View;
 use think\Paginator;
+use think\Response;
 use think\service\PaginatorService;
 
 /**
@@ -48,7 +49,7 @@ class Article extends BaseController
         $article = $this -> articleService -> read($id);
         
         if ($article == false) {
-            return View ::fetch('error/404');
+            return Response::create(View::fetch('error/404'), 'html', '404');
         }
         
         return View ::fetch('article', [
@@ -112,7 +113,7 @@ class Article extends BaseController
         $tag = $this -> tagService -> tagReadBySign($sign);
         
         if (empty($tag)) {
-            return View ::fetch('error/404');
+            return Response::create(View::fetch('error/404'), 'html', '404');
         }
         
         $tagRelation = $this -> tagService -> relationReadByTag($tag, ArticleModel::TARGET_TYPE);

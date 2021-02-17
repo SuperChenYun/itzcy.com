@@ -11,6 +11,7 @@ use app\service\SettingService;
 use app\web\BaseController;
 use think\App;
 use think\facade\View;
+use think\Response;
 
 /**
  * @property PageService pageService
@@ -30,7 +31,7 @@ class Page extends BaseController
         
         $page = $this->pageService->read($id);
         if (empty($page)) {
-            return View::fetch('error/404');
+            return Response::create(View::fetch('error/404'), 'html', '404');
         }
         View::assign('page', $page);
         return View::fetch('page/page');

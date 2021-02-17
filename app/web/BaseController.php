@@ -7,6 +7,7 @@ use app\service\MenuService;
 use app\service\SettingService;
 use think\App;
 use think\facade\View;
+use think\Response;
 
 /**
  * web基类
@@ -69,7 +70,7 @@ abstract class BaseController extends \app\BaseController
     
     public function __error (): string
     {
-        return View ::fetch('error/500');
+        return Response::create(View::fetch('error/500'), 'html', '500');
     }
     
     
