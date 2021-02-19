@@ -22,7 +22,7 @@
         {/volist}
     </div>
     <div class="article-content " id="article-content">
-        {$article.content|raw}
+        {$article->coverHtmlContent()|raw}
     </div>
 </div>
 {include file="public/footer"}
