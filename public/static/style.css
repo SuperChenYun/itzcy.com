@@ -406,6 +406,7 @@ footer .authorization div:last-child small {
 .article-content img {
     max-width: 100%;
     width: 100%;
+    height: auto;
 }
 
 .article .article-tag {
