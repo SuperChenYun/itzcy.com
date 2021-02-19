@@ -9,7 +9,7 @@
 <body>
 {include file="public/header"}
 <div class="featured_image no_img_filter">
-    <div class="img" style="background-image: url({$page.featured_image});"></div>
+    <div class="img" style="background-image: url({$app->config->get('app.cdn_host')}{$page.featured_image});"></div>
 </div>
 <div class="container">
     <div class="row">
