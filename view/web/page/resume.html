@@ -5,8 +5,8 @@
     <meta name="keywords" content="{$setting.site_keywords}">
     <meta name="description" content="{$setting.site_description}">
     {include file="public/meta"}
-    <link rel="stylesheet" href="css/timeline.css">
-    {load href="/static/timeline/timeline.css" /}
+    <link rel="stylesheet" type="text/css" href="{$app->config->get('app.cdn_host')}/static/timeline/timeline.css" />
+
 
 </head>
 <body>
