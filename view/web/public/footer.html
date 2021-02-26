@@ -5,7 +5,7 @@
             <span>推荐：</span>
             <ul>
                 {volist name="links" id="link"}
-                <li><a href="{$link.site_link}" target="_blank">{$link.site_name}</a></li>
+                <li><a rel="canonical" href="{$link.site_link}" target="_blank">{$link.site_name}</a></li>
 
                 {/volist}
             </ul>

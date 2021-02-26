@@ -3,7 +3,7 @@
 <head>
     <title>{$tag.tag_name} - {$setting.site_name}</title>
     <meta name="keywords" content="{$tag.keywords}">
-    <meta name="description" content="{$tag.describes   }">
+    <meta name="description" content="{$tag.describes}">
     {include file="public/meta"}
 </head>
 <body>
@@ -22,12 +22,12 @@
                 <div class="article-item row">
 
                     <div class=" col-lg-4 col-md-4 col-sm-12 col-12">
-                        <a href="/article/{$article.id}"><img src="{$app->config->get('app.cdn_host')}{$article.featured_image}"/></a>
+                        <a rel="canonical" href="/article/{$article.id}"><img src="{$app->config->get('app.cdn_host')}{$article.featured_image}"/></a>
                     </div>
 
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-                        <h3 class="article-title"><a href="/article/{$article.id}">{$article.title}</a></h3>
-                        <div class="article-describe"><a href="/article/{$article.id}">{$article -> getDescribe()}</a></div>
+                        <h3 class="article-title"><a rel="canonical" href="/article/{$article.id}">{$article.title}</a></h3>
+                        <div class="article-describe"><a rel="canonical" href="/article/{$article.id}">{$article -> getDescribe()}</a></div>
                         <div class="article-other">{$article.create_time} {$article.views}</div>
                     </div>
 
@@ -46,7 +46,7 @@
                 <div class="" style="min-height: 200px;">
                     <ul class="list-group list-group-flush">
                         {volist name="categorys" id="category"}
-                        <li class="list-group-item"><a href="/category/{$category.category_sign}">{$category.category_name}</a></li>
+                        <li class="list-group-item"><a rel="canonical" href="/category/{$category.category_sign}">{$category.category_name}</a></li>
                         {/volist}
                     </ul>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="article-tag" >
                     {volist name="tags" id="tag"}
                     <span class="" style="background-color: {$tag->getColor()}">
-                        <a href="/tag/{$tag.tag_sign}">{$tag.tag_name}</a>
+                        <a rel="canonical" href="/tag/{$tag.tag_sign}">{$tag.tag_name}</a>
                     </span>
                     {/volist}
                 </div>
