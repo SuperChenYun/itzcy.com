@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh">
 <head>
-    <title>文章列表【第{$request('page', 1)}页】 - {$setting.site_name}</title>
+    <title>文章列表【第{:request()->param('page', 1)}页】 - {$setting.site_name}</title>
     <meta name="keywords" content="{$setting.site_keywords}">
     <meta name="description" content="{$setting.site_description}">
     {include file="public/meta"}
