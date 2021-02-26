@@ -31,7 +31,7 @@
                     <ul class="navbar-nav mr-auto">
                             {volist name="mainMenu" id="menu"}
                             <li class="nav-item ">
-                                <a {if condition="$menu.is_target_blank" }target="_blank" {/if} class="nav-link"
+                                <a rel="canonical"  {if condition="$menu.is_target_blank" }target="_blank" {/if} class="nav-link"
                                 href="{$menu.menu_link}">{$menu.menu_text}</a>
                             </li>
                             {/volist}
