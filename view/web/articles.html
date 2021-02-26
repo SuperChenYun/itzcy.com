@@ -46,7 +46,7 @@
                 <div class="" style="min-height: 200px;">
                     <ul class="list-group list-group-flush">
                         {volist name="categorys" id="category"}
-                        <li class="list-group-item"><a href="/category/{$category.category_sign}">{$category.category_name}</a></li>
+                        <li class="list-group-item"><a href="/category/{:strtolowwer($category['category_sign'])}">{$category.category_name}</a></li>
                         {/volist}
                     </ul>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="article-tag" >
                     {volist name="tags" id="tag"}
                     <span class="" style="background-color: {$tag->getColor()}">
-                        <a href="/tag/{$tag.tag_sign}">{$tag.tag_name}</a>
+                        <a href="/tag/{:strtolowwer($tag['tag_sign'])}">{$tag.tag_name}</a>
                     </span>
                     {/volist}
                 </div>
