@@ -1,2 +1,8 @@
+#
+# robots.txt for ITZCY.COM
+# Last Change Time: 20210226
+
 User-agent: *
 Disallow:
+
+Sitemap: www.itzcy.com/sitemap.xml
