@@ -8,7 +8,7 @@
                 </button>
             </nav>
 
-            <a class="navbar-brand" href="/">CYBLOG</a>
+            <a rel="canonical"  class="navbar-brand" href="/">CYBLOG</a>
 
             <nav class="navbar">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="main-menu">
@@ -22,7 +22,7 @@
                 <div class="collapse navbar-collapse ext-menu" id="ext-menu">
                     <ul class="navbar-nav">
                         {volist name="$extMenu" id="menu"}
-                        <li class="nav-item"><a class="nav-link" {if condition="$menu.is_target_blank"}target="_blank"{/if} href="{$menu.menu_link}" >{$menu.menu_text}</a></li>
+                        <li class="nav-item"><a rel="canonical"  class="nav-link" {if condition="$menu.is_target_blank"}target="_blank"{/if} href="{$menu.menu_link}" >{$menu.menu_text}</a></li>
                         {/volist}
                     </ul>
                 </div>
