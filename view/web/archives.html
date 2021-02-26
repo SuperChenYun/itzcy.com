@@ -20,7 +20,7 @@
                 <h3>{$yearArchives.year}</h3>
                 <ul>
                     {volist name="yearArchives.articles" id="article"}
-                    <li><a href="{:url("/article/".$article['id'])}">{$article.title}</a></li>
+                    <li><a href="/article/{$article.id}">{$article.title}</a></li>
                     {/volist}
                 </ul>
             </div>
