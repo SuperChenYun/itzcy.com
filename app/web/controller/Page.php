@@ -34,7 +34,7 @@ class Page extends BaseController
             return Response::create(View::fetch('error/404'), 'html', '404');
         }
         View::assign('page', $page);
-        return View::fetch('page/page');
+        return View::fetch('page');
     
     }
     

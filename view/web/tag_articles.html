@@ -1,19 +1,20 @@
 <!doctype html>
 <html lang="zh">
 <head>
-    <title>文章列表 - {$setting.site_name}</title>
+    <title>{$tag.tag_name} - {$setting.site_name}</title>
     <meta name="keywords" content="{$tag.keywords}">
-    <meta name="description" content="{$tag.describes   }">
+    <meta name="description" content="{$tag.describes}">
     {include file="public/meta"}
 </head>
 <body>
 {include file="public/header"}
 
 <div class="featured_image">
-    <div class="img" style="background-image: url({$tag['featured_image']});"></div>
+    <div class="img" style="background-image: url({$app->config->get('app.cdn_host')}{$tag['featured_image']});"></div>
 </div>
 
 <div class="container article-list">
+    <h1 style="display: none;">{$tag.tag_name}</h1>
     <div class="row">
         <div class="articles col-lg-9 col-md-12 col-sm-12 col-12" id="articles">
             {volist name="articles" id="article"}
@@ -21,7 +22,7 @@
                 <div class="article-item row">
 
                     <div class=" col-lg-4 col-md-4 col-sm-12 col-12">
-                        <a href="/article/{$article.id}"><img src="{$article.featured_image}"/></a>
+                        <a href="/article/{$article.id}"><img alt="{$article.title}" src="{$app->config->get('app.cdn_host')}{$article.featured_image}"/></a>
                     </div>
 
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">

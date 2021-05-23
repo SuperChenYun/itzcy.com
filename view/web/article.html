@@ -9,10 +9,10 @@
 <body>
 {include file="public/header"}
 <div class="featured_image">
-    <div class="img" style="background-image: url({$article.featured_image});"></div>
+    <div class="img" style="background-image: url({$app->config->get('app.cdn_host')}{$article.featured_image});"></div>
 </div>
 <div class="container article">
-    <h2>{$article.title}</h2>
+    <h1>{$article.title}</h1>
     <div class="article-describe">
         {$article.create_time}
     </div>
@@ -22,7 +22,7 @@
         {/volist}
     </div>
     <div class="article-content " id="article-content">
-        {$article.content|raw}
+        {$article->coverHtmlContent()|raw}
     </div>
 </div>
 {include file="public/footer"}

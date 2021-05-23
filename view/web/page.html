@@ -9,12 +9,13 @@
 <body>
 {include file="public/header"}
 <div class="featured_image no_img_filter">
-    <div class="img" style="background-image: url({$page.featured_image});"></div>
+    <div class="img" style="background-image: url({$app->config->get('app.cdn_host')}{$page.featured_image});"></div>
 </div>
 <div class="container">
+    <h1 style="display: none;">{$page.title}</h1>
     <div class="row">
         <div class="col-lg-12">
-            {$page.content|raw}
+            {$page->coverHtmlContent|raw}
         </div>
     </div>
 </div>

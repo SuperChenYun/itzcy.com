@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace app\model;
 
 use app\BaseModel;
+use think\Config;
 use think\model\relation\HasMany;
 use think\model\relation\HasOne;
 
@@ -42,5 +43,14 @@ class ArticleModel extends BaseModel
         $content = strip_tags($content);
         
         return mb_substr($content, 0, 120) . '...';
+    }
+    
+    /**
+     * 转换成可以正常显示的HTML
+     * @return mixed|string|string[]
+     */
+    public function coverHtmlContent ()
+    {
+        return $this->coverToHtmlContent($this->content);
     }
 }

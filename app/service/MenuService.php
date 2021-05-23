@@ -210,13 +210,13 @@ class MenuService extends BaseService
     /**
      * menuTree 获取改Menu分类下的树形Menu结构
      *
-     * @param MenuModel|null $menuModel
+     * @param MenuModel|Collection|null $menuModel
      *
      * @return Collection
      */
     public function menuTree (MenuModel $menuModel = null)
     {
-        if ($menuModel === null) {
+        if ($menuModel === null || $menuModel ->isEmpty()) {
             return Collection ::make();
         }
         

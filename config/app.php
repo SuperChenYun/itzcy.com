@@ -5,6 +5,8 @@
 return [
     // 应用地址
     'app_host'         => env('app.host', ''),
+    // CDN 地址
+    'cdn_host'         => env('app.cdn_host', ''),
     // 应用的命名空间
     'app_namespace'    => '',
     // 是否启用路由

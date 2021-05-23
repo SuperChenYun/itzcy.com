@@ -30,6 +30,7 @@ abstract class BaseController extends \app\BaseController
     public function __construct (App $app, MenuService $menuService, LinkService $linkService, SettingService $settingService)
     {
         parent ::__construct($app);
+        View ::assign('app', $app);
         $this -> page           = $app -> request -> param('page', 1);
         $this -> pageRows       = $app -> request -> param('limit', $this -> pageRows);
         $this -> menuService    = $menuService;
@@ -57,7 +58,7 @@ abstract class BaseController extends \app\BaseController
         
         // 系统配置
         $setting = $this -> settingService -> toKV($this -> settingService -> lists());
-
+        
         View ::assign([
             'mainMenu'      => $mainMenu,
             'extMenu'       => $extMenu,
@@ -70,7 +71,7 @@ abstract class BaseController extends \app\BaseController
     
     public function __error (): string
     {
-        return Response::create(View::fetch('error/500'), 'html', '500');
+        return Response ::create(View ::fetch('error/500'), 'html', '500');
     }
     
     
