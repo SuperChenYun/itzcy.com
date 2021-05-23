@@ -8,3 +8,8 @@
     <meta rel="dns-preftech" href="//cdn.itzcy.com">
     {load href="/static/bootstrap/css/bootstrap.min.css" /}
     {load href="/static/style.css" /}
+    {if condition="$mourning"}
+    <style>
+        html {-webkit-filter: grayscale(100%);}
+    </style>
+    {/if}

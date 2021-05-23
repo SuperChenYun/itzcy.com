@@ -52,7 +52,16 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
+    {
+        $this->assignMourning();
+    }
+
+    protected function assignMourning()
+    {
+        $mourning = true;
+        $this->assign('mourning', $mourning);
+    }
+
 
     /**
      * 验证数据
