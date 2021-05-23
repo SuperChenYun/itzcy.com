@@ -5,6 +5,7 @@ namespace app;
 
 use think\App;
 use think\exception\ValidateException;
+use think\facade\View;
 use think\Validate;
 
 /**
@@ -59,7 +60,7 @@ abstract class BaseController
     protected function assignMourning()
     {
         $mourning = true;
-        $this->assign('mourning', $mourning);
+        View::assign('mourning', $mourning);
     }
 
 
