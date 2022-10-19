@@ -22,4 +22,7 @@ return [
     'taglib_begin'  => '{',
     // 标签库标签结束标记
     'taglib_end'    => '}',
+    // 其他配置
+    'layout_on'     => false,
+    'layout_name'   => 'layout'
 ];

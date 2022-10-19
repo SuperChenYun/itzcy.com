@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>{$setting.site_name}</title>
+        <description><![CDATA[ {$setting.site_description} ]]></description>
+        <author><![CDATA[ {$setting.rss_author} ]]></author>
+        <image>
+            <url>{:request() -> domain()}/static/logo.svg</url>
+            <title>{$setting.site_name}</title>
+            <link>{:request() -> domain()}</link>
+        </image>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>{:date('D, d M Y H:i:s e')}</lastBuildDate>
+        <atom:link href="{:request() -> domain()}/rss.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>{:date('D, d M Y H:i:s e')}</pubDate>
+        <link>{:request() -> domain()}</link>
+        <language><![CDATA[zh-Hans-CN ]]></language>
+        <copyright>
+            <![CDATA[ Copyright © Itzcy.Com. All rights reserved.]]>
+        </copyright>
+        <webMaster>
+            <![CDATA[ {$setting.rss_author} ]]>
+        </webMaster>
+        {if condition="!$categorys -> isEmpty()"}
+        {volist name="categorys" id="category"}
+        <category>
+            <![CDATA[ {$category.category_name} ]]>
+        </category>
+        {/volist}
+        {/if}
+        {if condition="!$articles -> isEmpty()"}
+        {volist name="articles" id="article"}
+        <item>
+            <title><![CDATA[ {$article.title} ]]></title>
+            <author><![CDATA[ {$setting.rss_author} ]]></author>
+            <link>{:url('/article/'.$article.id, [], false, true)}</link>
+            <description><![CDATA[ {$article.describes} ]]></description>
+            <guid>{:url('/article/'.$article.id, [], false, true)}</guid>
+            <category><![CDATA[ {$article.category_name} ]]></category>
+            <pubDate>{ $article->getData('create_time')}</pubDate>
+            <pubDate>{:date('D, d M Y H:i:s e', strtotime($article->create_time))}</pubDate>
+        </item>
+        {/volist}
+        {/if}
+    </channel>
+</rss>

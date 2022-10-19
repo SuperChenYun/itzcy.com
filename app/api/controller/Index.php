@@ -8,14 +8,12 @@ class Index extends BaseController
 {
     public function index()
     {
-        echo 'API';
-        echo '<br />';
         echo get_class($this->request);
         echo "\n";
         echo '<br />';
         # code...
         echo __CLASS__;
-        echo '\\';
+        echo "\n<br />";
         echo __FUNCTION__;
     }
 }

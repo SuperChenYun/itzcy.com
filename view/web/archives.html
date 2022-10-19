@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>归档 - {$setting.site_name}</title>
+    <meta name="keywords" content="归档,{$setting.site_keywords}">
+    <meta name="description" content="{$setting.site_description}">
+    {include file="public/meta"}
+</head>
+<body>
+{include file="public/header"}
+<div class="featured_image no_img_filter">
+    <div class="img" style="background-image: url({$app->config->get('app.cdn_host')}/static/image/archives.jpg)">
+</div>
+</div>
+<div class="container">
+    <h1 style="display: none;">Archives</h1>
+    <div class="row archives" id="archives">
+        <div class="col-lg-12">
+            {volist name="archives" id="yearArchives"}
+            <div class="year-archives">
+                <h3>{$yearArchives.year}</h3>
+                <ul>
+                    {volist name="yearArchives.articles" id="article"}
+                    <li><a href="/article/{$article.id}">{$article.title}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            {/volist}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}
+</body>
+{include file="public/js"}
+</html>

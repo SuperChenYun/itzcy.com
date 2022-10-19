@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>404 Not Found</title>
+    <title>404 Not Found - {$setting.site_name}</title>
+    <meta name="keywords" content="{$setting.site_keywords}">
+    <meta name="description" content="{$setting.site_description}">
+    {include file="public/meta"}
     <style>
         body{
             text-align: center;
@@ -10,6 +13,13 @@
     </style>
 </head>
 <body>
+{include file="public/header"}
+<div style="min-height: 600px;display: flex;flex-direction: column;justify-content: center">
     <h2>404 Not Found</h2>
+</div>
+
+
+{include file="public/footer"}
 </body>
+{include file="public/js"}
 </html>

@@ -5,6 +5,7 @@ namespace app;
 
 use think\App;
 use think\exception\ValidateException;
+use think\facade\View;
 use think\Validate;
 
 /**
@@ -52,7 +53,16 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
+    {
+        $this->assignMourning();
+    }
+
+    protected function assignMourning()
+    {
+        $mourning = true;
+        View::assign('mourning', $mourning);
+    }
+
 
     /**
      * 验证数据
@@ -91,7 +101,8 @@ abstract class BaseController
         return $v->failException(true)->check($data);
     }
 
-    public function __error() {
-        return 1;
+    public function __error(): string
+    {
+        return '';
     }
 }

@@ -1,0 +1,54 @@
+<footer>
+    <div class="container">
+        {if condition="!$links -> isEmpty()"}
+        <div class="links ">
+            <span>推荐：</span>
+            <ul>
+                {volist name="links" id="link"}
+                <li><a href="{$link.site_link}" target="_blank">{$link.site_name}</a></li>
+
+                {/volist}
+            </ul>
+        </div>
+        {/if}
+
+        {if condition="!$footerMenu->isEmpty()"}
+        <div class="footer-menu ">
+            {volist name="footerMenu" id="menuGroup"}
+            <div class="footer-menu-block ">
+                <h3>{$menuGroup.menu_text}</h3>
+                <ul>
+                    {foreach $menuGroup.child_menu  as $key => $menu}
+                        <li><a {if condition="$menu.is_target_blank"}target="_blank"{/if} href="{$menu.menu_link}">{$menu.menu_text}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+            {/volist}
+        </div>
+        {/if}
+
+        {if condition="!$footerExtMenu-> isEmpty()"}
+        <div class="ext-menu ">
+            <ul>
+                {volist name="$footerExtMenu" id="menu"}
+                    <li><a {if condition="$menu.is_target_blank"}target="_blank"{/if} href="{$menu.menu_link}" >{$menu.menu_text}</a></li>
+                {/volist}
+            </ul>
+        </div>
+        {/if}
+        <div class="hr ">
+            <div></div>
+        </div>
+        <div class="authorization ">
+            <div class="copyright">
+                <small>Copyright © Itzcy.Com. All rights reserved</small>
+                <small>{:date('Y-m-d')}</small>
+            </div>
+            <div class="permit">
+                <small><a rel="nofollow" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13010802000894">{$setting['PUBLIC_SECURITY_RECORD'] ?? '快去备案'}</a></small>
+                <small><a rel="nofollow" target="_blank" href="https://beian.miit.gov.cn/">{$setting['RECORD_OF_MIIT'] ?? '快去填写备案号'}</a></small>
+            </div>
+        </div>
+    </div>
+</footer>
+{include file="public/statistics"}

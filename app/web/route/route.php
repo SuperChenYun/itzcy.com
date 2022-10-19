@@ -10,8 +10,39 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::miss(function() {
-    return view('error/404');
-});
+Route ::miss('Error/e404');
 
-Route::get('/', 'index/index');
+Route ::get('/', 'Index/index');
+
+// About
+Route ::rule('about', 'Page/about');
+
+// Resume
+Route ::rule('resume', 'Page/resume');
+
+// 文章详情
+Route ::rule('article/:id', 'Article/read');
+
+// 文章列表
+Route ::rule('article', 'Article/lists');
+
+// 分类文章列表
+Route ::rule('category/:sign', 'Article/byCategory');
+
+// Tag文章列表
+Route ::rule('tag/:sign', 'Article/byTag');
+
+// 页面详情
+Route ::rule('page/:id', 'Page/read');
+
+// 归档页面
+Route ::rule('archives', 'Archives/index');
+
+// Rss订阅
+Route ::rule('rss', 'Xml/rss');
+Route ::rule('rss.xml', 'Xml/rss');
+
+// SiteMap
+Route ::rule('sitemap', 'Xml/sitemap');
+Route ::rule('sitemap.xml', 'Xml/sitemap');
+

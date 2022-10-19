@@ -11,23 +11,29 @@ steps:
     commands:
       - composer -V
       - composer install --no-interaction
-
+      -
   # 单元测试
-  - name: phpunit php7.2.32-cli
-    pull: if-not-exists
-    image: php:7.2.32-cli
-    commands:
-      - php -v
-      - cp .example.env .env
-      - ./vendor/bin/phpunit
-
   - name: phpunit php7.3.2
     pull: if-not-exists
     image: php:7.3.20
     commands:
       - php -v
-      - cp .example.env .env
+      - docker-php-ext-install pdo_mysql
+      - cp .example.drone.env .env
+      - php think migrate:run
       - ./vendor/bin/phpunit
+
+  - name: phpunit php7.4.14
+    pull: if-not-exists
+    image: php:7.4.14
+    commands:
+      - php -v
+      - docker-php-ext-install pdo_mysql
+      - cp .example.drone.env .env
+      - php think migrate:run
+      - ./vendor/bin/phpunit
+
+
 
 #  # 转移到主机目录
 #  - name: copy file
@@ -77,7 +83,7 @@ steps:
         from_secret: dingtalk_token
       type: markdown
       message_color: true
-      message_pic: true
+      message_pic: false
       sha_link: true
     when:
       status: [failure, success]

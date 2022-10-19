@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <title>{$setting.site_name}</title>
+    <meta name="keywords" content="{$setting.site_keywords}">
+    <meta name="description" content="{$setting.site_description}">
+    {include file="public/meta"}
+</head>
+<body id="home">
+{include file="public/header"}
+<div class="container-fluid" >
+    <div id="wrapper">
+        <img class="avatar"  alt="ChenYun" src="{$app->config->get('app.cdn_host')}/static/image/avatar/colors.jpg" />
+        <h1>ChenYun</h1>
+        <h3>Software Developer</h3>
+        <a class="home-btn" href="/article" >Blog</a>
+    </div>
+    <canvas width="1366" height="640"></canvas>
+</div>
+
+{include file="public/footer"}
+</body>
+{include file="public/js"}
+<script>
+  function isMobile() {
+    // console.log(navigator.userAgent);
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+      return true
+    } else {
+      return false
+    }
+  }
+</script>
+<script type="text/javascript">
+  document.addEventListener('touchmove', function (e) {
+    e.preventDefault()
+  })
+  var c = document.getElementsByTagName('canvas')[0],
+    x = c.getContext('2d'),
+    pr = isMobile() ? 1 : (window.devicePixelRatio || 1),
+    w = window.innerWidth,
+    w = document.getElementsByTagName('html')[0].offsetWidth,
+    h = window.innerHeight - 260,
+    f = 20,
+    q,
+    m = Math,
+    r = 0,
+    u = m.PI*2,
+    v = m.cos,
+    z = m.random
+  c.width = w*pr
+
+  c.height = h*pr
+  x.scale(pr, pr)
+  x.globalAlpha = 0.8
+  function i(){
+    x.clearRect(0,0,w,h)
+    q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+    while(q[1].x<w+f) d(q[0], q[1])
+  }
+  function d(i,j){
+    x.beginPath()
+    x.moveTo(i.x, i.y)
+    x.lineTo(j.x, j.y)
+    var k = j.x + (z()*2-0.25)*f,
+      n = y(j.y)
+    x.lineTo(k, n)
+    x.closePath()
+    r-=u/-50
+    x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+    x.fill()
+    q[0] = q[1]
+    q[1] = {x:k,y:n}
+  }
+  function y(p){
+    var t = p + (z()*2-1.1)*f
+    return (t>h||t<0) ? y(p) : t
+  }
+  document.onclick = i
+  document.ontouchstart = i
+  i()
+  window.addEventListener('resize', function() {
+    w = document.getElementsByTagName('html')[0].offsetWidth
+    h = window.innerHeight - 260
+    c.width = w*pr
+    c.height = h*pr
+    i()
+  })
+</script>
+
+<script type="text/javascript">
+  var snow = function() {
+    if(1==1) {
+      $("body").append('<canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;"></canvas>');
+      var b = document.getElementById("christmasCanvas"), a = b.getContext("2d"), d = window.innerWidth, c = window.innerHeight;
+      b.width = d;
+      b.height = c;
+      for(var e = [], b = 0;b < 70;b++) {
+        e.push({x:Math.random() * d, y:Math.random() * c, r:Math.random() * 4 + 1, d:Math.random() * 70})
+      }
+      var h = 0;
+      window.intervral4Christmas = setInterval(function() {
+        a.clearRect(0, 0, d, c);
+        a.fillStyle = "rgb(245,145,0)";
+        a.shadowBlur = 5;
+        a.shadowColor = "rgb(245,222,207)";
+        a.beginPath();
+        for(var b = 0;b < 70;b++) {
+          var f = e[b];
+          a.moveTo(f.x, f.y);
+          a.arc(f.x, f.y, f.r, 0, Math.PI * 2, !0)
+        }
+        a.fill();
+        h += 0.01;
+        for(b = 0;b < 70;b++) {
+          if(f = e[b], f.y += Math.cos(h + f.d) + 1 + f.r / 2, f.x += Math.sin(h) * 2, f.x > d + 5 || f.x < -5 || f.y > c) {
+            e[b] = b % 3 > 0 ? {x:Math.random() * d, y:-10, r:f.r, d:f.d} : Math.sin(h) > 0 ? {x:-5, y:Math.random() * c, r:f.r, d:f.d} : {x:d + 5, y:Math.random() * c, r:f.r, d:f.d}
+          }
+        }
+      }, 70)
+    }
+  }
+  // snow();
+</script>
+</html>
