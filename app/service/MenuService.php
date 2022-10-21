@@ -215,7 +215,7 @@ class MenuService extends BaseService
      *
      * @return Collection
      */
-    public function menuTree (MenuModel $menuModel = null)
+    public function menuTree (MenuModel $menuModel = null, bool $isNormal = true)
     {
         if ($menuModel === null || $menuModel ->isEmpty()) {
             return Collection ::make();
@@ -223,7 +223,11 @@ class MenuService extends BaseService
         
         try {
             
-            $menus = MenuModel ::where('delete_time', 0) -> select();
+            $menusModel = MenuModel ::where('delete_time', 0);
+            if ($isNormal) {
+                $menusModel->where('status', 1);
+            }
+            $menus = $menusModel -> select();
             
         } catch (DbException $e) {
             
