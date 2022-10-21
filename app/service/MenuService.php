@@ -196,7 +196,7 @@ class MenuService extends BaseService
             $where   = [
                 ['delete_time', '=', 0],
                 ['pid', '=', 0],
-                ['status', =, 1]
+                ['status', '=', 1]
             ];
             $where[] = ['menu_sign', '=', $menuSign];
             
