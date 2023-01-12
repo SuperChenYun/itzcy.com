@@ -44,12 +44,13 @@
   document.addEventListener('touchmove', function (e) {
     e.preventDefault()
   })
+  var rh = 160
   var c = document.getElementsByTagName('canvas')[0],
     x = c.getContext('2d'),
     pr = isMobile() ? 1 : (window.devicePixelRatio || 1),
     w = window.innerWidth,
     w = document.getElementsByTagName('html')[0].offsetWidth,
-    h = window.innerHeight - 260,
+    h = window.innerHeight -rh,
     f = 20,
     q,
     m = Math,
@@ -90,7 +91,7 @@
   i()
   window.addEventListener('resize', function() {
     w = document.getElementsByTagName('html')[0].offsetWidth
-    h = window.innerHeight - 260
+    h = window.innerHeight - rh
     c.width = w*pr
     c.height = h*pr
     i()
